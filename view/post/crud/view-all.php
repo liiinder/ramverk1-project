@@ -38,10 +38,13 @@ endif;
         <a href="<?= url("post/view/{$item->id}"); ?>">
             <?= $item->title ?>
         </a>
-        <?php if ($user) : ?>
-            <a href="<?= url("post/update/{$item->id}"); ?>">EDIT</a>
+        <?php if ($user == $item->username) : ?>
+            - <a href="<?= url("post/update/{$item->id}"); ?>">EDIT</a>
         <?php endif; ?>
     </h2>
-    <p><?= $item->text ?></p>
+    <p>
+        <?= $item->text ?> /<?= $item->username?>
+    <img src="https://www.gravatar.com/avatar/<?= md5($item->email) ?>?s=100"></p>
 </div>
+
 <?php endforeach; ?>

@@ -1,15 +1,15 @@
 <?php
 
-namespace linder\Post;
+namespace linder\Comment;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use linder\Post\HTMLForm\CreateForm;
-use linder\Post\HTMLForm\EditForm;
-use linder\Post\HTMLForm\DeleteForm;
-use linder\Post\HTMLForm\UpdateForm;
+use linder\Comment\HTMLForm\CreateForm;
+use linder\Comment\HTMLForm\EditForm;
+use linder\Comment\HTMLForm\DeleteForm;
+use linder\Comment\HTMLForm\UpdateForm;
 use linder\User\User;
-use linder\Comment\Comment;
+use linder\Post\Post;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -18,7 +18,7 @@ use linder\Comment\Comment;
 /**
  * A sample controller to show how a controller class can be implemented.
  */
-class PostController implements ContainerInjectableInterface
+class CommentController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -45,27 +45,27 @@ class PostController implements ContainerInjectableInterface
 
 
 
-    /**
-     * Show all items.
-     *
-     * @return object as a response object
-     */
-    public function indexActionGet() : object
-    {
-        $page = $this->di->get("page");
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $data = [
-            "items" => $post->findAllJoin("user", "post.userId = user.id"),
-            "user" => $this->di->get("session")->get("username")
-        ];
+    // /**
+    //  * Show all items.
+    //  *
+    //  * @return object as a response object
+    //  */
+    // public function indexActionGet() : object
+    // {
+    //     $page = $this->di->get("page");
+    //     $post = new Post();
+    //     $post->setDb($this->di->get("dbqb"));
+    //     $data = [
+    //         "items" => $post->findAllJoin("user", "post.userId = user.id"),
+    //         "user" => $this->di->get("session")->get("username")
+    //     ];
 
-        $page->add("post/crud/view-all", $data);
+    //     $page->add("post/crud/view-all", $data);
 
-        return $page->render([
-            "title" => "A collection of items",
-        ]);
-    }
+    //     return $page->render([
+    //         "title" => "A collection of items",
+    //     ]);
+    // }
 
 
 
@@ -74,14 +74,21 @@ class PostController implements ContainerInjectableInterface
      *
      * @return object as a response object
      */
-    public function createAction() : object
+    public function createAction(int $id) : object
     {
         if ($this->di->get("session")->has("username") == false) {
             $this->di->get("response")->redirect("user/login");
         }
         $page = $this->di->get("page");
-        $form = new CreateForm($this->di);
+        $form = new CreateForm($this->di, $id);
         $form->check();
+
+        $post = new Post();
+        $post->setDb($this->di->get("dbqb"));
+
+        $page->add("post/crud/view-post", [
+            "post" => $post->findWhereJoin("post.id", $id, "user", "user.id = post.userId")
+        ]);
 
         $page->add("post/crud/create", [
             "form" => $form->getHTML(),
@@ -164,23 +171,18 @@ class PostController implements ContainerInjectableInterface
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->findWhereJoin(
-            "post.id",
+            "post.id = ?",
             $id,
             "user",
             "post.userId = user.id"
         );
-
-        $comment = new Comment();
-        $comment->setDb($this->di->get("dbqb"));
-        $comment->findWhereJoin("comment.postId", $id, "user", "user.id = comment.userId");
 
         $page = $this->di->get("page");
         $form = new UpdateForm($this->di, $id);
         $form->check();
 
         $data = [
-            "post" => $post,
-            "comments" => $comment
+            "post" => $post
         ];
 
         $page->add("post/crud/view-post", $data);

@@ -1,16 +1,16 @@
 <?php
 
-namespace linder\Post\HTMLForm;
+namespace linder\Comment\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
 use linder\Post\Post;
-use linder\User\User;
+use linder\Comment\Comment;
 
 /**
- * Form to create an item.
+ * Form to delete an item.
  */
-class CreateForm extends FormModel
+class DeleteForm extends FormModel
 {
     /**
      * Constructor injects with DI container.
@@ -23,27 +23,42 @@ class CreateForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Details of the item",
-                "escape-values" => false
+                "legend" => "Delete an item",
             ],
             [
-                "title" => [
-                    "type" => "text",
-                    "validation" => ["not_empty"],
-                ],
-                        
-                "text" => [
-                    "type" => "textarea",
-                    "validation" => ["not_empty"],
+                "select" => [
+                    "type"        => "select",
+                    "label"       => "Select item to delete:",
+                    "options"     => $this->getAllItems(),
                 ],
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Create item",
+                    "value" => "Delete item",
                     "callback" => [$this, "callbackSubmit"]
                 ],
             ]
         );
+    }
+
+
+
+    /**
+     * Get all items as array suitable for display in select option dropdown.
+     *
+     * @return array with key value of all items.
+     */
+    protected function getAllItems() : array
+    {
+        $post = new Post();
+        $post->setDb($this->di->get("dbqb"));
+
+        $posts = ["-1" => "Select an item..."];
+        foreach ($post->findAll() as $obj) {
+            $posts[$obj->id] = "{$obj->column1} ({$obj->id})";
+        }
+
+        return $posts;
     }
 
 
@@ -56,15 +71,10 @@ class CreateForm extends FormModel
      */
     public function callbackSubmit() : bool
     {
-        $user = new User();
-        $user->setDb($this->di->get("dbqb"));
-        $active = $user->find("username", $this->di->get("session")->get("username"));
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->title  = $this->form->value("title");
-        $post->text = $this->form->value("text");
-        $post->userId = $active->id;
-        $post->save();
+        $post->find("id", $this->form->value("select"));
+        $post->delete();
         return true;
     }
 

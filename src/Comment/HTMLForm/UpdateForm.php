@@ -1,10 +1,11 @@
 <?php
 
-namespace linder\Post\HTMLForm;
+namespace linder\Comment\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
 use linder\Post\Post;
+use linder\Comment\Comment;
 
 /**
  * Form to update an item.

@@ -1,11 +1,12 @@
 <?php
 
-namespace linder\Post\HTMLForm;
+namespace linder\Comment\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
 use linder\Post\Post;
 use linder\User\User;
+use linder\Comment\Comment;
 
 /**
  * Form to create an item.
@@ -16,10 +17,14 @@ class CreateForm extends FormModel
      * Constructor injects with DI container.
      *
      * @param Psr\Container\ContainerInterface $di a service container
+     * @param $postId int
+     * @param $commentId int
      */
-    public function __construct(ContainerInterface $di)
+    public function __construct(ContainerInterface $di, $postId, $commentId = null)
     {
         parent::__construct($di);
+        $this->postId = $postId;
+        $this->commentId = $commentId;
         $this->form->create(
             [
                 "id" => __CLASS__,
@@ -27,11 +32,7 @@ class CreateForm extends FormModel
                 "escape-values" => false
             ],
             [
-                "title" => [
-                    "type" => "text",
-                    "validation" => ["not_empty"],
-                ],
-                        
+
                 "text" => [
                     "type" => "textarea",
                     "validation" => ["not_empty"],
@@ -59,12 +60,13 @@ class CreateForm extends FormModel
         $user = new User();
         $user->setDb($this->di->get("dbqb"));
         $active = $user->find("username", $this->di->get("session")->get("username"));
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $post->title  = $this->form->value("title");
-        $post->text = $this->form->value("text");
-        $post->userId = $active->id;
-        $post->save();
+        $comment = new Comment();
+        $comment->setDb($this->di->get("dbqb"));
+        $comment->text = $this->form->value("text");
+        $comment->userId = $active->id;
+        $comment->postId = $this->postId;
+        $comment->commentId = $this->commentId;
+        $comment->save();
         return true;
     }
 
@@ -77,9 +79,8 @@ class CreateForm extends FormModel
      */
     public function callbackSuccess()
     {
-        $this->di->get("response")->redirect("post")->send();
+        $this->di->get("response")->redirect("post/view/" . $this->postId )->send();
     }
-
 
 
     // /**
