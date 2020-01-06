@@ -20,11 +20,11 @@ class CreateForm extends FormModel
      * @param $postId int
      * @param $commentId int
      */
-    public function __construct(ContainerInterface $di, $postId, $commentId = null)
+    public function __construct(ContainerInterface $di, $postId, $replyId = null)
     {
         parent::__construct($di);
         $this->postId = $postId;
-        $this->commentId = $commentId;
+        $this->replyId = $replyId;
         $this->form->create(
             [
                 "id" => __CLASS__,
@@ -63,9 +63,9 @@ class CreateForm extends FormModel
         $comment = new Comment();
         $comment->setDb($this->di->get("dbqb"));
         $comment->text = $this->form->value("text");
-        $comment->userId = $active->id;
+        $comment->userId = $active->userId;
         $comment->postId = $this->postId;
-        $comment->commentId = $this->commentId;
+        $comment->replyId = $this->replyId;
         $comment->save();
         return true;
     }

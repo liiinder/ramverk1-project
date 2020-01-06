@@ -13,15 +13,16 @@ class Comment extends ActiveRecordModel
      * @var string $tableName name of the database table.
      */
     protected $tableName = "Comment";
+    protected $tableIdColumn = "commentId";
 
     /**
      * Columns in the table.
      *
      * @var integer $id primary key auto incremented.
      */
-    public $id;
+    public $commentId;
     public $postId;
     public $userId;
-    public $commentId;
+    public $replyId;
     public $text;
 }

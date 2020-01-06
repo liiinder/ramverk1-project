@@ -10,23 +10,24 @@ use Anax\DatabaseActiveRecord\ActiveRecordModel;
 class User extends ActiveRecordModel
 {
     /**
- * @var string $tableName name of the database table.
- */
-protected $tableName = "User";
+     * @var string $tableName name of the database table.
+     */
+    protected $tableName = "User";
+    protected $tableIdColumn = "userId";
 
     /**
      * Columns in the table.
      *
      * @var integer $id primary key auto incremented.
      */
-    public $id;
+    public $userId;
     public $username;
     public $password;
     public $email;
-    public $created;
-    public $updated;
-    public $deleted;
-    public $active;
+    // public $created;
+    // public $updated;
+    // public $deleted;
+    // public $active;
 
     /**
      * Set the password.

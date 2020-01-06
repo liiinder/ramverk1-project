@@ -13,13 +13,14 @@ class Post extends ActiveRecordModel
      * @var string $tableName name of the database table.
      */
     protected $tableName = "Post";
+    protected $tableIdColumn = "postId";
 
     /**
      * Columns in the table.
      *
      * @var integer $id primary key auto incremented.
      */
-    public $id;
+    public $postId;
     public $userId;
     public $text;
     public $title;

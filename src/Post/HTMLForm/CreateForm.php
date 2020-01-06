@@ -63,7 +63,7 @@ class CreateForm extends FormModel
         $post->setDb($this->di->get("dbqb"));
         $post->title  = $this->form->value("title");
         $post->text = $this->form->value("text");
-        $post->userId = $active->id;
+        $post->userId = $active->userId;
         $post->save();
         return true;
     }

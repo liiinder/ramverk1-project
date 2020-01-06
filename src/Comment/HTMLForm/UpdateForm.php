@@ -33,7 +33,7 @@ class UpdateForm extends FormModel
                     "type" => "hidden",
                     "validation" => ["not_empty"],
                     "readonly" => true,
-                    "value" => $post->id,
+                    "value" => $post->postId,
                 ],
 
                 "title" => [
@@ -74,7 +74,7 @@ class UpdateForm extends FormModel
     {
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->find("id", $id);
+        $post->find("postId", $id);
         return $post;
     }
 
@@ -90,7 +90,7 @@ class UpdateForm extends FormModel
     {
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->find("id", $this->form->value("id"));
+        $post->find("PostId", $this->form->value("id"));
         $post->title = $this->form->value("title");
         $post->text = $this->form->value("text");
         $post->save();

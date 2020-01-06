@@ -87,7 +87,7 @@ class CommentController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
 
         $page->add("post/crud/view-post", [
-            "post" => $post->findWhereJoin("post.id", $id, "user", "user.id = post.userId")
+            "post" => $post->findWhereJoin("post.postId = ?", $id, "user", "user.userId = post.userId")
         ]);
 
         $page->add("post/crud/create", [
@@ -141,8 +141,8 @@ class CommentController implements ContainerInjectableInterface
         $user->find("username", $username);
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->find("id", $id);
-        if ($post->userId != $user->id) {
+        $post->find("postId", $id);
+        if ($post->userId != $user->userId) {
             $this->di->get("response")->redirect("user/login");
         }
 
@@ -171,10 +171,10 @@ class CommentController implements ContainerInjectableInterface
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->findWhereJoin(
-            "post.id = ?",
+            "post.postId = ?",
             $id,
             "user",
-            "post.userId = user.id"
+            "post.userId = user.userId"
         );
 
         $page = $this->di->get("page");

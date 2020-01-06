@@ -56,7 +56,7 @@ class PostController implements ContainerInjectableInterface
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $data = [
-            "items" => $post->findAllJoin("user", "post.userId = user.id"),
+            "posts" => $post->findAllJoin("user", "post.userId = user.userId"),
             "user" => $this->di->get("session")->get("username")
         ];
 
@@ -134,8 +134,8 @@ class PostController implements ContainerInjectableInterface
         $user->find("username", $username);
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->find("id", $id);
-        if ($post->userId != $user->id) {
+        $post->find("postId", $id);
+        if ($post->userId != $user->userId) {
             $this->di->get("response")->redirect("user/login");
         }
 
@@ -164,15 +164,15 @@ class PostController implements ContainerInjectableInterface
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->findWhereJoin(
-            "post.id",
+            "post.postId = ?",
             $id,
             "user",
-            "post.userId = user.id"
+            "post.userId = user.userId"
         );
 
         $comment = new Comment();
         $comment->setDb($this->di->get("dbqb"));
-        $comment->findWhereJoin("comment.postId", $id, "user", "user.id = comment.userId");
+        $comment->findWhereJoin("comment.postId = ?", $id, "user", "user.userId = comment.userId");
 
         $page = $this->di->get("page");
         $form = new UpdateForm($this->di, $id);

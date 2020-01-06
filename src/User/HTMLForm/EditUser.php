@@ -36,8 +36,6 @@ class EditUser extends FormModel
                     "type"          => "text",
                     "value"         => $active,
                     "readonly"      => true
-                    //"description" => "Here you can place a description.",
-                    //"placeholder" => "Here is a placeholder",
                 ],
                 
                 "old-password" => [
@@ -46,15 +44,12 @@ class EditUser extends FormModel
                 
                 "new-password" => [
                     "type"        => "password",
-                    "label" => "New password (if you want to change it.):",
-                    //"placeholder" => "Here is a placeholder",
+                    "label" => "New password (if you want to change it.):"
                 ],
                 
                 "re-password" => [
                     "label" => "Re-enter new password:",
-                    "type"        => "password",
-                    //"description" => "Here you can place a description.",
-                    //"placeholder" => "Here is a placeholder",
+                    "type"        => "password"
                 ],
                 
                 "email" => [

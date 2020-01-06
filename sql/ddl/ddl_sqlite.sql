@@ -3,14 +3,14 @@
 --
 DROP TABLE IF EXISTS User;
 CREATE TABLE User (
-    "id" INTEGER PRIMARY KEY NOT NULL,
+    "userId" INTEGER PRIMARY KEY NOT NULL,
     "username" TEXT UNIQUE NOT NULL,
     "password" TEXT,
-    "email" TEXT,
-    "created" TIMESTAMP,
-    "updated" DATETIME,
-    "deleted" DATETIME,
-    "active" DATETIME
+    "email" TEXT
+    -- "created" TIMESTAMP,
+    -- "updated" DATETIME,
+    -- "deleted" DATETIME,
+    -- "active" DATETIME
 );
 
 --
@@ -18,14 +18,14 @@ CREATE TABLE User (
 --
 DROP TABLE IF EXISTS Post;
 CREATE TABLE Post (
-    "id" INTEGER PRIMARY KEY NOT NULL,
+    "postId" INTEGER PRIMARY KEY NOT NULL,
     "userId" INTEGER NOT NULL,
     "text" TEXT,
-    "title" TEXT,
-    "created" TIMESTAMP,
-    "updated" DATETIME,
-    "deleted" DATETIME,
-    "active" DATETIME
+    "title" TEXT
+    -- "created" TIMESTAMP,
+    -- "updated" DATETIME,
+    -- "deleted" DATETIME,
+    -- "active" DATETIME
 );
 
 --
@@ -33,15 +33,15 @@ CREATE TABLE Post (
 --
 DROP TABLE IF EXISTS Comment;
 CREATE TABLE Comment (
-    "id" INTEGER PRIMARY KEY NOT NULL,
+    "commentId" INTEGER PRIMARY KEY NOT NULL,
     "postId" INTEGER NOT NULL,
-    "commentId" INTEGER,
+    "replyId" INTEGER,
     "userId" INTEGER,
-    "text" TEXT,
-    "created" TIMESTAMP,
-    "updated" DATETIME,
-    "deleted" DATETIME,
-    "active" DATETIME
+    "text" TEXT
+    -- "created" TIMESTAMP,
+    -- "updated" DATETIME,
+    -- "deleted" DATETIME,
+    -- "active" DATETIME
 );
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE Comment (
 --
 DROP TABLE IF EXISTS Tags;
 CREATE TABLE Tags (
-    "id" INTEGER PRIMARY KEY NOT NULL,
+    "tagId" INTEGER PRIMARY KEY NOT NULL,
     "tag" TEXT UNIQUE NOT NULL
 );
 

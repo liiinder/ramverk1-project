@@ -10,41 +10,39 @@ namespace Anax\View;
 //echo showEnvironment(get_defined_vars());
 
 // Gather incoming variables and use default values if not set
-$items = isset($items) ? $items : null;
+$posts = isset($posts) ? $posts : null;
 
 // Create urls for navigation
 $urlToCreate = url("post/create");
-$urlToDelete = url("post/delete");
-
-
-
+var_dump($posts);
 ?><h1>View all items</h1>
 
 <p>
-    <a href="<?= $urlToCreate ?>">Create</a> | 
-    <a href="<?= $urlToDelete ?>">Delete</a>
+    <a href="<?= $urlToCreate ?>">Create</a>
 </p>
 
-<?php if (!$items) : ?>
+<?php if (!$posts) : ?>
     <p>There are no items to show.</p>
 <?php
     return;
 endif;
 ?>
 
-<?php foreach ($items as $item) : ?>
+<?php foreach ($posts as $post) : ?>
 <div>
     <h2>
-        <a href="<?= url("post/view/{$item->id}"); ?>">
-            <?= $item->title ?>
+        <a href="<?= url("post/view/{$post->postId}"); ?>">
+            <?= $post->title ?>
         </a>
-        <?php if ($user == $item->username) : ?>
-            - <a href="<?= url("post/update/{$item->id}"); ?>">EDIT</a>
-        <?php endif; ?>
+        <?php if ($user == $post->username) : ?>
+            - <a href="<?= url("post/update/{$post->postId}"); ?>">Edit</a>
+        <?php endif; 
+        ?>
     </h2>
     <p>
-        <?= $item->text ?> /<?= $item->username?>
-    <img src="https://www.gravatar.com/avatar/<?= md5($item->email) ?>?s=100"></p>
+        <?= $post->text ?> /<?= $post->username?>
+    <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100"></p>
+    <a href="<?= url("comment/create/{$post->postId}"); ?>">Reply</a>
 </div>
 
 <?php endforeach; ?>
