@@ -5,6 +5,7 @@ namespace linder\Post\HTMLForm;
 use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
 use linder\Post\Post;
+use linder\Comment\Comment;
 
 /**
  * Form to update an item.
@@ -24,7 +25,7 @@ class UpdateForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Update details of the item",
+                "legend" => false,
                 "escape-values" => false
             ],
             [
@@ -36,12 +37,14 @@ class UpdateForm extends FormModel
                 ],
 
                 "title" => [
+                    "label" => "Rubrik:",
                     "type" => "text",
                     "value" => $post->title,
                     "validation" => ["not_empty"],
                 ],
                         
                 "text" => [
+                    "label" => "Inlägg:",
                     "type" => "textarea",
                     "value" => $post->text,
                     "validation" => ["not_empty"],
@@ -49,12 +52,21 @@ class UpdateForm extends FormModel
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Save",
+                    "value" => "Spara ändring",
+                    "class" => "green",
                     "callback" => [$this, "callbackSubmit"]
                 ],
 
                 "reset" => [
                     "type"      => "reset",
+                    "value"     => "Ångra"
+                ],
+
+                "delete" => [
+                    "type" => "submit",
+                    "value" => "Radera inlägg",
+                    "class" => "right red",
+                    "callback" => [$this, "callbackDelete"]
                 ],
             ]
         );
@@ -87,15 +99,12 @@ class UpdateForm extends FormModel
      */
     public function callbackSubmit() : bool
     {
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $post->find("postId", $this->form->value("id"));
+        $post = $this->getItemDetails($this->form->value("id"));
         $post->title = $this->form->value("title");
         $post->text = $this->form->value("text");
         $post->save();
         return true;
     }
-
 
 
     /**
@@ -109,16 +118,20 @@ class UpdateForm extends FormModel
         //$this->di->get("response")->redirect("post/update/{$post->id}");
     }
 
-
-
-    // /**
-    //  * Callback what to do if the form was unsuccessfully submitted, this
-    //  * happen when the submit callback method returns false or if validation
-    //  * fails. This method can/should be implemented by the subclass for a
-    //  * different behaviour.
-    //  */
-    // public function callbackFail()
-    // {
-    //     $this->di->get("response")->redirectSelf()->send();
-    // }
+    /**
+     * Callback for delete-button 
+     */
+    public function callbackDelete()
+    {
+        $post = $this->getItemDetails($this->form->value("id"));
+        $comment = new Comment();
+        $comment->setDb($this->di->get("dbqb"));
+        $comments = $comment->findAllWhere("postId", $this->form->value("id"));
+        foreach ($comments as $comment) {
+            $comment->setDb($this->di->get("dbqb"));
+            $comment->delete();
+        }
+        $post->delete();
+        $this->di->get("response")->redirect("post")->send();
+    }
 }

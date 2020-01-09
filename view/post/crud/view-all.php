@@ -18,7 +18,7 @@ $urlToCreate = url("post/create");
 ?><h1>View all items</h1>
 
 <p>
-    <a href="<?= $urlToCreate ?>">Create</a>
+    <a href="<?= $urlToCreate ?>" class="button">Skapa nytt inlägg</a>
 </p>
 
 <?php if (!$posts) : ?>
@@ -29,21 +29,26 @@ endif;
 ?>
 
 <?php foreach ($posts as $post) : ?>
-<div>
-    <h2>
+<div class="clearfix">
+    <h4>
         <a href="<?= url("post/view/{$post->postId}"); ?>">
             <?= $post->title ?>
         </a>
         <?php if ($userId == $post->userId) : ?>
-            - <a href="<?= url("post/update/{$post->postId}"); ?>">Edit</a>
+            <a href="<?= url("post/update/{$post->postId}"); ?>" class="button">Ändra</a>
         <?php endif; 
         ?>
-    </h2>
+    </h4>
+    <div class="right clearfix">
+        <a href="<?= url("user/profile/" . $post->userId)?>">
+            <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100"><br>
+            <?= $post->username?>
+        </a>
+    </div>
     <p>
-        <?= $post->text ?> /<?= $post->username?>
-        <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100">
+        <?= $post->text ?>
     </p>
-    <a href="<?= url("comment/create/{$post->postId}"); ?>">Reply</a>
+    <a href="<?= url("comment/create/{$post->postId}"); ?>" class="button">Svara</a>
 </div>
 
 <?php endforeach; ?>

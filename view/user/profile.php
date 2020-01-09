@@ -15,26 +15,30 @@ $comments = isset($comments) ? $comments : null;
 $user = isset($user) ? $user : null;
 $edit = "";
 if ($active) {
-    $edit = " - <a href=" . url("user/edit/" . $user->userId) .">Edit</a>";
+    $edit = " <a href=" . url("user/edit/" . $user->userId) ." class='button'>Edit</a>";
 }
 
 ?>
 <h1><?= $user->username ?><?= $edit ?></h1>
 <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=300">
 <p><?= $user->email ?></p>
-<h2>Posts</h2>
-<ul>
-    <?php foreach ($posts as $post) : ?>
-    <li>
-        <a href="<?= url("post/view/" . $post->postId) ?>"><?= $post->title ?></a>
-    </li>
-    <?php endforeach; ?>
-</ul>
-<h2>Comments</h2>
-<ul>
-    <?php foreach ($comments as $comments) : ?>
-    <li>
-        <a href="<?= url("post/view/" . $comments->postId) ?>"><?= $comments->title ?></a>
-    </li>
-    <?php endforeach; ?>
-</ul>
+<?php if ($posts) : ?>
+    <h2><?= sizeof($posts) ?>st inlägg</h2>
+    <ul>
+        <?php foreach ($posts as $post) : ?>
+        <li>
+            <a href="<?= url("post/view/" . $post->postId) ?>"><?= $post->title ?></a>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif;
+if ($comments) : ?>
+    <h2><?= sizeof($comments) ?>st kommentar<?= (sizeof($comments) > 1) ? "er" : "" ?></h2>
+    <ul>
+        <?php foreach ($comments as $comments) : ?>
+        <li>
+            <a href="<?= url("post/view/" . $comments->postId) ?>"><?= $comments->title ?></a>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif;

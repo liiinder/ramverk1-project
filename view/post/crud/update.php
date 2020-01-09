@@ -17,7 +17,7 @@ $urlToView = url("post");
 
 
 
-?><h1>Update an item</h1>
+?><h1>Redigera inlägg</h1>
 
 <?= $form ?>
 

@@ -6965,20 +6965,49 @@ a.rm-button.rm-clicked .rm-button-face-2 {
 /**
  * My settings.
  */
+.comment-wrapper {
+  border-top: 0.15em solid #ddd;
+  padding-top: 0.4em;
+  margin-top: 0.5em;
+}
 .comment-depth {
-  border-left: 0.25em solid #333;
+  border-left: 0.25em solid #ddd;
   padding-left: 0.5em;
   height: 100%;
 }
-.comment-byline {
+.right {
   float: right;
   overflow: auto;
 }
-.comment-byline::after {
-  content: "";
+.clearfix:after {
+  content: " ";
+  /* Older browser do not support empty content */
+  visibility: hidden;
+  display: block;
+  height: 0;
   clear: both;
-  display: table;
 }
-.comment-wrapper {
-  height: 150px;
+.button {
+  color: #333;
+  padding: 0.2rem 1rem;
+  margin-bottom: 0.2rem;
+  background-color: #fff;
+  background-image: linear-gradient(#fff, #eee);
+  border: 1px solid #ccc;
+  text-decoration: none;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 0.2rem;
+  line-height: 1.4;
+}
+.red {
+  background-color: #f7a2b2;
+  background-image: linear-gradient(#f7a2b2, #f37c93);
+}
+.green {
+  background-color: #c1d6cd;
+  background-image: linear-gradient(#c1d6cd, #a8c6b9);
 }

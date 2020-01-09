@@ -183,4 +183,13 @@ class UserController implements ContainerInjectableInterface
             "title" => "User profile"
         ]);
     }
+
+    /**
+     * Logout route
+     */
+    public function logoutAction() : object
+    {
+        $this->di->get("session")->delete("userId");
+        $this->di->get("response")->redirect("user/login");
+    }
 }

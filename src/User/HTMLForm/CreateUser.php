@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
  */
 class CreateUser extends FormModel
 {
+    private $userId;
     /**
      * Constructor injects with DI container.
      *
@@ -75,8 +76,20 @@ class CreateUser extends FormModel
         $user->username = $username;
         $user->setPassword($password);
         $user->save();
+        $this->userId = $user->userId;
 
         $this->form->addOutput("User was created.");
         return true;
+    }
+
+    /**
+     * Callback what to do if the form was successfully submitted, this
+     * happen when the submit callback method returns true. This method
+     * can/should be implemented by the subclass for a different behaviour.
+     */
+    public function callbackSuccess()
+    {
+        $this->di->get("session")->set("userId", $this->userId);
+        $this->di->get("response")->redirect("post")->send();
     }
 }

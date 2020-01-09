@@ -112,7 +112,7 @@ class PostController implements ContainerInjectableInterface
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->find("postId", $id);
-        if (!$userId || ($post->userId != $usierId)) {
+        if (!$userId || ($post->userId != $userId)) {
             $this->di->get("response")->redirect("user/login");
         }
 
@@ -150,7 +150,8 @@ class PostController implements ContainerInjectableInterface
 
         $data = [
             "post" => $post->findAllWhere("post.postId", $id)[0],
-            "comments" => $res
+            "comments" => $res,
+            "userId" => $this->di->get("session")->get("userId")
         ];
 
         $page->add("post/crud/view-post", $data);

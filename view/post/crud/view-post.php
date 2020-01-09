@@ -12,30 +12,49 @@
     $comments = isset($comments) ? $comments : [];
     // var_dump($comments);
 ?>
-<h1><?= $post->title ?></h1>
-<p>
-    <?= $post->text ?>
-</p>
-<img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100">
-<?= $post->username ?>
-<a href="<?= url("comment/create/{$post->postId}"); ?>">Reply</a>
-
+<div class="clearfix">
+    <h2>
+        <?= $post->title ?>
+        <?php if ($userId == $post->userId) : ?>
+            <a href="<?= url("post/update/{$post->postId}"); ?>" class="button">Ändra</a>
+        <?php endif; 
+        ?>
+    </h2>
+    <div class="right clearfix">
+        <a href="<?= url("user/profile/" . $post->userId)?>">
+            <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100"><br>
+            <?= $post->username?>
+        </a>
+    </div>
+    <p>
+        <?= $post->text ?>
+    </p>
+</div>
+<h2>Kommentarer</h2>
 <?php foreach ($comments as $comment) :
-    echo '<div class="comment-wrapper">';
+    $wrapper = ($comment->depth == 1) ? " comment-wrapper" : "";
+    echo "<div class='clearfix'>";
     for ($i = 0; $i < $comment->depth; $i++) : ?>
-        <div class="comment-depth">
+        <div class='comment-depth<?= $wrapper ?>'>
     <?php endfor; ?>
-        <div class="comment-byline">
-            <img src="https://www.gravatar.com/avatar/<?= md5($comment->email) ?>?s=100"><br>
-            /<?= $comment->username ?>
+        <div class="right clearfix">
+            <a href="<?= url("user/profile/" . $comment->userId)?>">
+                <img src="https://www.gravatar.com/avatar/<?= md5($comment->email) ?>?s=50"><br>
+                <?= $comment->username ?>
+            </a>
         </div>
         <p>
             <?= $comment->text ?> 
         </p>
-        <a href="<?= url("comment/create/{$post->postId}?replyId={$comment->commentId}"); ?>">Reply</a>
+        <a href="
+            <?= url(
+                "comment/create/{$post->postId}?replyId={$comment->commentId}");
+            ?>" class="button">
+            Svara
+        </a>
 
     <?php for ($i = 0; $i < $comment->depth; $i++) : ?>
         </div>
     <?php endfor; ?>
     </div>
-<?php endforeach; ?>
+<?php endforeach;
