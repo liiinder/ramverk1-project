@@ -39,5 +39,10 @@ return [
             "url" => $url,
             "title" => "user",
         ],
+        [
+            "text" => "Om",
+            "url" => "om",
+            "title" => "Om projektet"
+        ]
     ],
 ];

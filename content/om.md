@@ -14,15 +14,10 @@ views:
         data:
             meta: 
                 type: single
-                route: block/om-redovisa
+                route: block/om-projekt
 ---
 Om
 =========================
 
-Detta innehåll är skrivet i markdown och du hittar innehållet i filen `content/om.md`.
-
-Skriv några kloka ord om kursen?
-
-Lägg till en representativ bild för kursen, enligt ditt egna val.
-
-[FIGURE src=image/car.png?w=300 caption="En fin bil som demobild."]
+Jag som byggt denna webbplats heter Kristoffer Linder och jag studerar webbprogrammerig på BTH.
+Denna sidan är byggd i php med hjälp av ramverket Anax. Målet är att det skall efterlikna någon form av forumstyp med inlägg, kommentarer, taggar som användare kan använda.
