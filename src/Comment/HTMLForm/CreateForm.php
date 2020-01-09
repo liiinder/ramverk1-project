@@ -20,11 +20,11 @@ class CreateForm extends FormModel
      * @param $postId int
      * @param $commentId int
      */
-    public function __construct(ContainerInterface $di, $postId, $replyId = null)
+    public function __construct(ContainerInterface $di, $postId)
     {
         parent::__construct($di);
         $this->postId = $postId;
-        $this->replyId = $replyId;
+        $this->replyId = $this->di->get("request")->getGet("replyId");
         $this->form->create(
             [
                 "id" => __CLASS__,
@@ -32,7 +32,6 @@ class CreateForm extends FormModel
                 "escape-values" => false
             ],
             [
-
                 "text" => [
                     "type" => "textarea",
                     "validation" => ["not_empty"],
@@ -57,13 +56,10 @@ class CreateForm extends FormModel
      */
     public function callbackSubmit() : bool
     {
-        $user = new User();
-        $user->setDb($this->di->get("dbqb"));
-        $active = $user->find("username", $this->di->get("session")->get("username"));
         $comment = new Comment();
         $comment->setDb($this->di->get("dbqb"));
         $comment->text = $this->form->value("text");
-        $comment->userId = $active->userId;
+        $comment->userId = $this->di->get("session")->get("userId");
         $comment->postId = $this->postId;
         $comment->replyId = $this->replyId;
         $comment->save();

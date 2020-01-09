@@ -317,7 +317,7 @@ template {
  * Font Awesome.
  */
 /*!
- * Font Awesome Free 5.11.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.12.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 .fa,
@@ -745,6 +745,9 @@ template {
 .fa-bacon:before {
   content: "\f7e5";
 }
+.fa-bahai:before {
+  content: "\f666";
+}
 .fa-balance-scale:before {
   content: "\f24e";
 }
@@ -1060,6 +1063,9 @@ template {
 .fa-car-side:before {
   content: "\f5e4";
 }
+.fa-caravan:before {
+  content: "\f8ff";
+}
 .fa-caret-down:before {
   content: "\f0d7";
 }
@@ -1368,6 +1374,9 @@ template {
 }
 .fa-compress:before {
   content: "\f066";
+}
+.fa-compress-alt:before {
+  content: "\f422";
 }
 .fa-compress-arrows-alt:before {
   content: "\f78c";
@@ -1768,6 +1777,9 @@ template {
 .fa-expand:before {
   content: "\f065";
 }
+.fa-expand-alt:before {
+  content: "\f424";
+}
 .fa-expand-arrows-alt:before {
   content: "\f31e";
 }
@@ -1932,6 +1944,9 @@ template {
 }
 .fa-firefox:before {
   content: "\f269";
+}
+.fa-firefox-browser:before {
+  content: "\f907";
 }
 .fa-first-aid:before {
   content: "\f479";
@@ -2362,9 +2377,6 @@ template {
 .fa-hat-wizard:before {
   content: "\f6e8";
 }
-.fa-haykal:before {
-  content: "\f666";
-}
 .fa-hdd:before {
   content: "\f0a0";
 }
@@ -2499,6 +2511,9 @@ template {
 }
 .fa-id-card-alt:before {
   content: "\f47f";
+}
+.fa-ideal:before {
+  content: "\f913";
 }
 .fa-igloo:before {
   content: "\f7ae";
@@ -2890,6 +2905,9 @@ template {
 .fa-meteor:before {
   content: "\f753";
 }
+.fa-microblog:before {
+  content: "\f91a";
+}
 .fa-microchip:before {
   content: "\f2db";
 }
@@ -3228,6 +3246,9 @@ template {
 }
 .fa-pied-piper-pp:before {
   content: "\f1a7";
+}
+.fa-pied-piper-square:before {
+  content: "\f91e";
 }
 .fa-piggy-bank:before {
   content: "\f4d3";
@@ -4201,6 +4222,9 @@ template {
 .fa-traffic-light:before {
   content: "\f637";
 }
+.fa-trailer:before {
+  content: "\f941";
+}
 .fa-train:before {
   content: "\f238";
 }
@@ -4308,6 +4332,9 @@ template {
 }
 .fa-uniregistry:before {
   content: "\f404";
+}
+.fa-unity:before {
+  content: "\f949";
 }
 .fa-universal-access:before {
   content: "\f29a";
@@ -4695,7 +4722,7 @@ template {
   width: auto;
 }
 /*!
- * Font Awesome Free 5.11.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.12.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
@@ -4712,7 +4739,7 @@ template {
   font-weight: 900;
 }
 /*!
- * Font Awesome Free 5.11.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.12.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
@@ -6938,3 +6965,20 @@ a.rm-button.rm-clicked .rm-button-face-2 {
 /**
  * My settings.
  */
+.comment-depth {
+  border-left: 0.25em solid #333;
+  padding-left: 0.5em;
+  height: 100%;
+}
+.comment-byline {
+  float: right;
+  overflow: auto;
+}
+.comment-byline::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.comment-wrapper {
+  height: 150px;
+}

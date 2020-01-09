@@ -24,4 +24,23 @@ class Post extends ActiveRecordModel
     public $userId;
     public $text;
     public $title;
+
+    /**
+     * Overwrites the ActiveRecord findAllWhere
+     * so it includes the join on each search.
+     * 
+     * @param string table
+     * @param string value to search for
+     *
+     * @return array of object of this class
+     */
+    public function findAllWhere($where, $value)
+    {
+        return $this->findAllWhereJoin(
+            $where . " = ?",
+            $value,
+            "user",
+            "user.userId = post.userId"
+        );
+    }
 }

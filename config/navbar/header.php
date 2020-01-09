@@ -1,15 +1,21 @@
 <?php
+
+use linder\User\User;
 /**
  * Supply the basis for the navbar as an array.
  */
 global $di;
 
-if ($di->get("session")->has("username")) {
-    $text = "Profil";
-    // $url = "user/edit";
+$userId = $di->get("session")->get("userId");
+$user = new User();
+$user->setDb($di->get("dbqb"));
+$user->find("userId", $userId);
+if ($userId) {
+    $text = 'Profil <img src="https://www.gravatar.com/avatar/' . md5($user->email) . '?s=50">';
+    $url = "user/profile/" . $userId;
 } else {
     $text = "Login";
-    // $url = "user/login";
+    $url = "user/login";
 }
 return [
     // Use for styling the menu
@@ -23,30 +29,6 @@ return [
             "url" => "",
             "title" => "Första sidan, börja här.",
         ],
-        // [
-        //     "text" => "Redovisning",
-        //     "url" => "redovisning",
-        //     "title" => "Redovisningstexter från kursmomenten.",
-        //     "submenu" => [
-        //         "items" => [
-        //             [
-        //                 "text" => "Kmom01",
-        //                 "url" => "redovisning/kmom01",
-        //                 "title" => "Redovisning för kmom01.",
-        //             ],
-        //             [
-        //                 "text" => "Kmom02",
-        //                 "url" => "redovisning/kmom02",
-        //                 "title" => "Redovisning för kmom02.",
-        //             ],
-        //         ],
-        //     ],
-        // ],
-        // [
-        //     "text" => "Om",
-        //     "url" => "om",
-        //     "title" => "Om denna webbplats.",
-        // ],
         [
             "text" => "Forum",
             "url" => "post",
@@ -54,13 +36,8 @@ return [
         ],
         [
             "text" => $text,
-            "url" => "user/edit",
+            "url" => $url,
             "title" => "user",
         ],
-        // [
-        //     "text" => "Verktyg",
-        //     "url" => "verktyg",
-        //     "title" => "Verktyg och möjligheter för utveckling.",
-        // ],
     ],
 ];

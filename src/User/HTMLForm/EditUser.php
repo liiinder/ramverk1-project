@@ -16,15 +16,13 @@ class EditUser extends FormModel
      *
      * @param Psr\Container\ContainerInterface $di a service container
      */
-    public function __construct(ContainerInterface $di)
+    public function __construct(ContainerInterface $di, $id)
     {
         parent::__construct($di);
 
         $user = new User();
         $user->setDb($this->di->get("dbqb"));
-
-        $active = $this->di->get("session")->get("username");
-        $email = ($active) ? $user->find("username", $active)->email : null;
+        $user->find("userId", $id);
 
         $this->form->create(
             [
@@ -34,7 +32,7 @@ class EditUser extends FormModel
             [
                 "user" => [
                     "type"          => "text",
-                    "value"         => $active,
+                    "value"         => $user->username,
                     "readonly"      => true
                 ],
                 
@@ -54,7 +52,7 @@ class EditUser extends FormModel
                 
                 "email" => [
                     "type" => "email",
-                    "value" => $email,
+                    "value" => $user->email,
                 ],
                 
                 "submit" => [
@@ -122,7 +120,7 @@ class EditUser extends FormModel
      */
     public function callbackLogout()
     {
-        $this->di->get("session")->delete("username");
+        $this->di->get("session")->delete("userId");
         return true;
     }
 }

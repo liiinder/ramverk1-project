@@ -14,7 +14,7 @@ $posts = isset($posts) ? $posts : null;
 
 // Create urls for navigation
 $urlToCreate = url("post/create");
-var_dump($posts);
+
 ?><h1>View all items</h1>
 
 <p>
@@ -34,14 +34,15 @@ endif;
         <a href="<?= url("post/view/{$post->postId}"); ?>">
             <?= $post->title ?>
         </a>
-        <?php if ($user == $post->username) : ?>
+        <?php if ($userId == $post->userId) : ?>
             - <a href="<?= url("post/update/{$post->postId}"); ?>">Edit</a>
         <?php endif; 
         ?>
     </h2>
     <p>
         <?= $post->text ?> /<?= $post->username?>
-    <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100"></p>
+        <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100">
+    </p>
     <a href="<?= url("comment/create/{$post->postId}"); ?>">Reply</a>
 </div>
 

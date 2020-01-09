@@ -27,23 +27,6 @@ class PostController implements ContainerInjectableInterface
     /**
      * @var $data description
      */
-    //private $data;
-
-
-
-    // /**
-    //  * The initialize method is optional and will always be called before the
-    //  * target method/action. This is a convienient method where you could
-    //  * setup internal properties that are commonly used by several methods.
-    //  *
-    //  * @return void
-    //  */
-    // public function initialize() : void
-    // {
-    //     ;
-    // }
-
-
 
     /**
      * Show all items.
@@ -57,7 +40,7 @@ class PostController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
         $data = [
             "posts" => $post->findAllJoin("user", "post.userId = user.userId"),
-            "user" => $this->di->get("session")->get("username")
+            "userId" => $this->di->get("session")->get("userId")
         ];
 
         $page->add("post/crud/view-all", $data);
@@ -125,17 +108,11 @@ class PostController implements ContainerInjectableInterface
      */
     public function updateAction(int $id) : object
     {
-        $username = $this->di->get("session")->get("username");
-        if (!$username) {
-            $this->di->get("response")->redirect("user/login");
-        }
-        $user = new User();
-        $user->setDb($this->di->get("dbqb"));
-        $user->find("username", $username);
+        $userId = $this->di->get("session")->get("userId");
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->find("postId", $id);
-        if ($post->userId != $user->userId) {
+        if (!$userId || ($post->userId != $usierId)) {
             $this->di->get("response")->redirect("user/login");
         }
 
@@ -163,24 +140,17 @@ class PostController implements ContainerInjectableInterface
     {
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->findWhereJoin(
-            "post.postId = ?",
-            $id,
-            "user",
-            "post.userId = user.userId"
-        );
 
         $comment = new Comment();
         $comment->setDb($this->di->get("dbqb"));
-        $comment->findWhereJoin("comment.postId = ?", $id, "user", "user.userId = comment.userId");
+        $comments = $comment->findAllWhere("comment.postId", $id);
+        $res = $comment->sort($comments);
 
         $page = $this->di->get("page");
-        $form = new UpdateForm($this->di, $id);
-        $form->check();
 
         $data = [
-            "post" => $post,
-            "comments" => $comment
+            "post" => $post->findAllWhere("post.postId", $id)[0],
+            "comments" => $res
         ];
 
         $page->add("post/crud/view-post", $data);

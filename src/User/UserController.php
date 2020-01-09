@@ -7,6 +7,8 @@ use Anax\Commons\ContainerInjectableTrait;
 use linder\User\HTMLForm\UserLogin;
 use linder\User\HTMLForm\CreateUser;
 use linder\User\HTMLForm\EditUser;
+use linder\Comment\Comment;
+use linder\Post\Post;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -125,11 +127,12 @@ class UserController implements ContainerInjectableInterface
      *
      * @return object as a response object
      */
-    public function editAction() : object
+    public function editAction(int $id) : object
     {
         $page = $this->di->get("page");
-        if ($this->di->get("session")->has("username")) {
-            $form = new EditUser($this->di);
+        $userId = $this->di->get("session")->get("userId");
+        if ($userId == $id) {
+            $form = new EditUser($this->di, $id);
         } else {
             $form = new UserLogin($this->di);
         }
@@ -142,6 +145,42 @@ class UserController implements ContainerInjectableInterface
 
         return $page->render([
             "title" => "Edit a user",
+        ]);
+    }
+
+    /**
+     * @param int $userId
+     * 
+     * @return object as a response object
+     */
+    public function profileAction(int $id) : object
+    {
+        $page = $this->di->get("page");
+        $comment = new Comment();
+        $comment->setDb($this->di->get("dbqb"));
+        $comments = $comment->findAllWhereJoin("comment.userId = ?", $id, "post", "post.postId = comment.postId");
+        $post = new Post();
+        $post->setDb($this->di->get("dbqb"));
+        $posts = $post->findAllWhere("post.userId", $id);
+        $user = new User();
+        $user->setDb($this->di->get("dbqb"));
+        $user->find("userId", $id);
+        if ($user->userId == null) {
+            $this->di->get("response")->redirect("post");
+        }
+        $active = ($this->di->get("session")->get("userId") == $user->userId);
+
+        $data = [
+            "posts" => $posts,
+            "comments" => $comments,
+            "user" => $user,
+            "active" => $active
+        ];
+
+
+        $page->add("user/profile", $data);
+        return $page->render([
+            "title" => "User profile"
         ]);
     }
 }

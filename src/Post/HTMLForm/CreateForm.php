@@ -56,14 +56,11 @@ class CreateForm extends FormModel
      */
     public function callbackSubmit() : bool
     {
-        $user = new User();
-        $user->setDb($this->di->get("dbqb"));
-        $active = $user->find("username", $this->di->get("session")->get("username"));
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->title  = $this->form->value("title");
         $post->text = $this->form->value("text");
-        $post->userId = $active->userId;
+        $post->userId = $this->di->get("session")->get("userId");
         $post->save();
         return true;
     }

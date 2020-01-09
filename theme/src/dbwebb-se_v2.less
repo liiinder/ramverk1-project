@@ -247,3 +247,24 @@ img.responsive {
 @gridType:      "float"; // "flex"
 
 @navbarFontFamily: @fontFamilyTimesNewRoman;
+
+.comment-depth {
+    border-left: 0.25em solid #333;
+    padding-left: 0.5em;
+    height: 100%;
+}
+
+.comment-byline {
+    float: right;
+    overflow: auto;
+}
+
+.comment-byline::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.comment-wrapper {
+    height: 150px;
+}

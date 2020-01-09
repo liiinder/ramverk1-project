@@ -29,46 +29,6 @@ class CommentController implements ContainerInjectableInterface
      */
     //private $data;
 
-
-
-    // /**
-    //  * The initialize method is optional and will always be called before the
-    //  * target method/action. This is a convienient method where you could
-    //  * setup internal properties that are commonly used by several methods.
-    //  *
-    //  * @return void
-    //  */
-    // public function initialize() : void
-    // {
-    //     ;
-    // }
-
-
-
-    // /**
-    //  * Show all items.
-    //  *
-    //  * @return object as a response object
-    //  */
-    // public function indexActionGet() : object
-    // {
-    //     $page = $this->di->get("page");
-    //     $post = new Post();
-    //     $post->setDb($this->di->get("dbqb"));
-    //     $data = [
-    //         "items" => $post->findAllJoin("user", "post.userId = user.id"),
-    //         "user" => $this->di->get("session")->get("username")
-    //     ];
-
-    //     $page->add("post/crud/view-all", $data);
-
-    //     return $page->render([
-    //         "title" => "A collection of items",
-    //     ]);
-    // }
-
-
-
     /**
      * Handler with form to create a new item.
      *
@@ -76,9 +36,10 @@ class CommentController implements ContainerInjectableInterface
      */
     public function createAction(int $id) : object
     {
-        if ($this->di->get("session")->has("username") == false) {
+        if ($this->di->get("session")->has("userId") == false) {
             $this->di->get("response")->redirect("user/login");
         }
+
         $page = $this->di->get("page");
         $form = new CreateForm($this->di, $id);
         $form->check();
@@ -87,7 +48,7 @@ class CommentController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
 
         $page->add("post/crud/view-post", [
-            "post" => $post->findWhereJoin("post.postId = ?", $id, "user", "user.userId = post.userId")
+            "post" => $post->findAllWhereJoin("post.postId = ?", $id, "user", "user.userId = post.userId")[0]
         ]);
 
         $page->add("post/crud/create", [
@@ -132,13 +93,13 @@ class CommentController implements ContainerInjectableInterface
      */
     public function updateAction(int $id) : object
     {
-        $username = $this->di->get("session")->get("username");
-        if (!$username) {
+        $userId = $this->di->get("session")->get("userId");
+        if (!$userId) {
             $this->di->get("response")->redirect("user/login");
         }
         $user = new User();
         $user->setDb($this->di->get("dbqb"));
-        $user->find("username", $username);
+        $user->find("userId", $userId);
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->find("postId", $id);
@@ -170,7 +131,7 @@ class CommentController implements ContainerInjectableInterface
     {
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $post->findWhereJoin(
+        $post->findAllWhereJoin(
             "post.postId = ?",
             $id,
             "user",
