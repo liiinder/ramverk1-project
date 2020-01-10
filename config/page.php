@@ -28,23 +28,23 @@ return [
 
     // These views are always loaded into the collection of views.
     "views" => [
-        [
-            "region" => "header-col-1",
-            "template" => "anax/v2/header/site_logo",
-            "data" => [
-                "class" => "large",
-                "siteLogo"      => "image/theme/leaf_256x256.png",
-                "siteLogoAlt"   => "Löv",
-            ],
-        ],
+        // [
+        //     "region" => "header-col-1",
+        //     "template" => "anax/v2/header/site_logo",
+        //     "data" => [
+        //         "class" => "large",
+        //         "siteLogo"      => "image/theme/leaf_256x256.png",
+        //         "siteLogoAlt"   => "Löv",
+        //     ],
+        // ],
         [
             "region" => "header-col-1",
             "template" => "anax/v2/header/site_logo_text",
             "data" => [
                 "homeLink"      => "",
                 "siteLogoText"  => "ramverk1",
-                "siteLogoTextIcon" => "image/theme/leaf_40x40.png",
-                "siteLogoTextIconAlt" => "Löv-bild",
+                // "siteLogoTextIcon" => "image/theme/leaf_40x40.png",
+                // "siteLogoTextIconAlt" => "Löv-bild",
             ],
         ],
         [

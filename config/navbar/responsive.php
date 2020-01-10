@@ -2,12 +2,15 @@
 /**
  * Supply the basis for the navbar as an array.
  */
-return [
+
+$userId = $di->get("session")->get("userId");
+
+$menu = [
     // Use for styling the menu
     "id" => "rm-menu",
     "wrapper" => null,
     "class" => "rm-default rm-mobile",
- 
+
     // Here comes the menu items
     "items" => [
         [
@@ -16,38 +19,36 @@ return [
             "title" => "Första sidan, börja här.",
         ],
         [
-            "text" => "Redovisning",
-            "url" => "redovisning",
-            "title" => "Redovisningstexter från kursmomenten.",
-            "submenu" => [
-                "items" => [
-                    [
-                        "text" => "Kmom01",
-                        "url" => "redovisning/kmom01",
-                        "title" => "Redovisning för kmom01.",
-                    ],
-                    [
-                        "text" => "Kmom02",
-                        "url" => "redovisning/kmom02",
-                        "title" => "Redovisning för kmom02.",
-                    ],
-                ],
-            ],
+            "text" => "Forum",
+            "url" => "post",
+            "title" => "forum"
         ],
         [
             "text" => "Om",
             "url" => "om",
-            "title" => "Om denna webbplats.",
+            "title" => "Om projektet"
+            ]
         ],
-        [
-            "text" => "Styleväljare",
-            "url" => "style",
-            "title" => "Välj stylesheet.",
-        ],
-        [
-            "text" => "Verktyg",
-            "url" => "verktyg",
-            "title" => "Verktyg och möjligheter för utveckling.",
-        ],
-    ],
+    ];
+
+$login = [
+    "text" => "Logga in",
+    "url" => "user/login",
+    "title" => "Login"
 ];
+if ($userId) {
+    $profil = [
+        "text" => 'Profil',
+        "url" => "user/profile/" . $userId,
+        "title" => "Profil",
+    ];
+    $login = [
+        "text" => "Logga ut",
+        "url" => "user/logout",
+        "title" => "Login"
+    ];
+    array_push($menu["items"], $profil);
+};
+array_push($menu["items"], $login);
+
+return $menu;
