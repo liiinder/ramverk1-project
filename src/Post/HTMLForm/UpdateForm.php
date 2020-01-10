@@ -21,28 +21,21 @@ class UpdateForm extends FormModel
     public function __construct(ContainerInterface $di, $id)
     {
         parent::__construct($di);
+        $this->id = $id;
         $post = $this->getItemDetails($id);
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => false,
                 "escape-values" => false
             ],
             [
-                "id" => [
-                    "type" => "hidden",
-                    "validation" => ["not_empty"],
-                    "readonly" => true,
-                    "value" => $post->postId,
-                ],
-
                 "title" => [
                     "label" => "Rubrik:",
                     "type" => "text",
                     "value" => $post->title,
                     "validation" => ["not_empty"],
                 ],
-                        
+
                 "text" => [
                     "label" => "Inlägg:",
                     "type" => "textarea",
@@ -99,7 +92,7 @@ class UpdateForm extends FormModel
      */
     public function callbackSubmit() : bool
     {
-        $post = $this->getItemDetails($this->form->value("id"));
+        $post = $this->getItemDetails($this->id);
         $post->title = $this->form->value("title");
         $post->text = $this->form->value("text");
         $post->save();
@@ -123,10 +116,10 @@ class UpdateForm extends FormModel
      */
     public function callbackDelete()
     {
-        $post = $this->getItemDetails($this->form->value("id"));
+        $post = $this->getItemDetails($this->id);
         $comment = new Comment();
         $comment->setDb($this->di->get("dbqb"));
-        $comments = $comment->findAllWhere("postId", $this->form->value("id"));
+        $comments = $comment->findAllWhere("postId", $this->id);
         foreach ($comments as $comment) {
             $comment->setDb($this->di->get("dbqb"));
             $comment->delete();

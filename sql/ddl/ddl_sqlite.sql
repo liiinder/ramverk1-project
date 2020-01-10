@@ -47,8 +47,8 @@ CREATE TABLE Comment (
 --
 -- Table Tags
 --
-DROP TABLE IF EXISTS Tags;
-CREATE TABLE Tags (
+DROP TABLE IF EXISTS Tag;
+CREATE TABLE Tag (
     "tagId" INTEGER PRIMARY KEY NOT NULL,
     "tag" TEXT UNIQUE NOT NULL
 );
@@ -56,9 +56,9 @@ CREATE TABLE Tags (
 --
 -- TABLE TagsPost
 --
-DROP TABLE IF EXISTS TagsPost;
-CREATE TABLE TagsPost (
+DROP TABLE IF EXISTS Tag2Post;
+CREATE TABLE Tag2Post (
+    "id" INTEGER PRIMARY KEY NOT NULL,
     "tagId" INTEGER,
-    "postId" INTEGER,
-    PRIMARY KEY ("tagId", "postId")
+    "postId" INTEGER
 );

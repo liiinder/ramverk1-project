@@ -11,16 +11,17 @@ namespace Anax\View;
 
 // Gather incoming variables and use default values if not set
 $item = isset($item) ? $item : null;
+$type = isset($type) ? $type : "";
 
 // Create urls for navigation
 $urlToView = url("post");
 
 
 
-?><h1>Redigera inlägg</h1>
+?><h1>Redigera <?= $type ?></h1>
 
 <?= $form ?>
 
 <p>
-    <a href="<?= $urlToView ?>">View all</a>
+    <a href="<?= $urlToView ?>">Visa alla inlägg</a>
 </p>

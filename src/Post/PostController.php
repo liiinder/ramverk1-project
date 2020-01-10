@@ -10,6 +10,7 @@ use linder\Post\HTMLForm\DeleteForm;
 use linder\Post\HTMLForm\UpdateForm;
 use linder\User\User;
 use linder\Comment\Comment;
+use linder\Tag\Tag2Post;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -37,16 +38,19 @@ class PostController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
         $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
+        $post->setDb($this->di->get("dbqb"));        
+        $tag = new Tag2Post();
+        $tag->setDb($this->di->get("dbqb"));
         $data = [
             "posts" => $post->findAllJoin("user", "post.userId = user.userId"),
-            "userId" => $this->di->get("session")->get("userId")
+            "userId" => $this->di->get("session")->get("userId"),
+            "tags" => $tag->findAllJoin("tag", "tag.tagId = tag2post.tagId")
         ];
 
         $page->add("post/crud/view-all", $data);
 
         return $page->render([
-            "title" => "A collection of items",
+            "title" => "Visa inlägg",
         ]);
     }
 
@@ -71,33 +75,9 @@ class PostController implements ContainerInjectableInterface
         ]);
 
         return $page->render([
-            "title" => "Create a item",
+            "title" => "Skapa inlägg",
         ]);
     }
-
-
-
-    /**
-     * Handler with form to delete an item.
-     *
-     * @return object as a response object
-     */
-    public function deleteAction() : object
-    {
-        $page = $this->di->get("page");
-        $form = new DeleteForm($this->di);
-        $form->check();
-
-        $page->add("post/crud/delete", [
-            "form" => $form->getHTML(),
-        ]);
-
-        return $page->render([
-            "title" => "Delete an item",
-        ]);
-    }
-
-
 
     /**
      * Handler with form to update an item.
@@ -122,10 +102,11 @@ class PostController implements ContainerInjectableInterface
 
         $page->add("post/crud/update", [
             "form" => $form->getHTML(),
+            "type" => "inlägg"
         ]);
 
         return $page->render([
-            "title" => "Update an item",
+            "title" => "Redigera inlägg",
         ]);
     }
 
@@ -138,26 +119,33 @@ class PostController implements ContainerInjectableInterface
      */
     public function viewAction(int $id) : object
     {
+        // posts
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
 
+        // comments
         $comment = new Comment();
         $comment->setDb($this->di->get("dbqb"));
         $comments = $comment->findAllWhere("comment.postId", $id);
         $res = $comment->sort($comments);
 
+        // tags
+        $tags = new Tag2Post();
+        $tags->setDb($this->di->get("dbqb"));
+        
         $page = $this->di->get("page");
-
+        
         $data = [
             "post" => $post->findAllWhere("post.postId", $id)[0],
             "comments" => $res,
-            "userId" => $this->di->get("session")->get("userId")
+            "userId" => $this->di->get("session")->get("userId"),
+            "tags" => $tags->findTagsWhere("post.postId", $id)
         ];
 
         $page->add("post/crud/view-post", $data);
 
         return $page->render([
-            "title" => "View post",
+            "title" => "Visa inlägg",
         ]);
     }
 }

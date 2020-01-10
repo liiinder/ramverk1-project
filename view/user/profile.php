@@ -15,11 +15,14 @@ $comments = isset($comments) ? $comments : null;
 $user = isset($user) ? $user : null;
 $edit = "";
 if ($active) {
-    $edit = " <a href=" . url("user/edit/" . $user->userId) ." class='button'>Edit</a>";
+    $edit = " <a href=" . url("user/edit/" . $user->userId) ." class='button'>Ändra</a>";
 }
 
 ?>
-<h1><?= $user->username ?><?= $edit ?></h1>
+<h1>
+    <?= $user->username ?>
+    <?= $edit ?>
+</h1>
 <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=300">
 <p><?= $user->email ?></p>
 <?php if ($posts) : ?>

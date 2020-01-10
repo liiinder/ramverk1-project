@@ -17,10 +17,10 @@ $urlToViewItems = url("post");
 
 
 
-?><h1>Create a item</h1>
+?><h1>Skriv ett inlägg</h1>
 
 <?= $form ?>
 
 <p>
-    <a href="<?= $urlToViewItems ?>">View all</a>
+    <a href="<?= $urlToViewItems ?>">Visa alla inlägg</a>
 </p>

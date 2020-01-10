@@ -4,7 +4,6 @@ namespace linder\Comment\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
-use linder\Post\Post;
 use linder\Comment\Comment;
 
 /**
@@ -21,41 +20,31 @@ class UpdateForm extends FormModel
     public function __construct(ContainerInterface $di, $id)
     {
         parent::__construct($di);
-        $post = $this->getItemDetails($id);
+        $this->id = $id;
+        $this->comment = $this->getItemDetails($id);
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Update details of the item",
                 "escape-values" => false
             ],
             [
-                "id" => [
-                    "type" => "hidden",
-                    "validation" => ["not_empty"],
-                    "readonly" => true,
-                    "value" => $post->postId,
-                ],
-
-                "title" => [
-                    "type" => "text",
-                    "value" => $post->title,
-                    "validation" => ["not_empty"],
-                ],
-                        
                 "text" => [
                     "type" => "textarea",
-                    "value" => $post->text,
+                    "label" => "Kommentar:",
+                    "value" => $this->comment->text,
                     "validation" => ["not_empty"],
                 ],
 
                 "submit" => [
                     "type" => "submit",
                     "value" => "Save",
+                    "class" => "green",
                     "callback" => [$this, "callbackSubmit"]
                 ],
 
                 "reset" => [
                     "type"      => "reset",
+                    "value"     => "Ångra"
                 ],
             ]
         );
@@ -68,16 +57,15 @@ class UpdateForm extends FormModel
      *
      * @param integer $id get details on item with id.
      * 
-     * @return Post
+     * @return Comment
      */
     public function getItemDetails($id) : object
     {
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $post->find("postId", $id);
-        return $post;
+        $comment = new Comment();
+        $comment->setDb($this->di->get("dbqb"));
+        $comment->find("commentId", $id);
+        return $comment;
     }
-
 
 
     /**
@@ -88,38 +76,19 @@ class UpdateForm extends FormModel
      */
     public function callbackSubmit() : bool
     {
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $post->find("PostId", $this->form->value("id"));
-        $post->title = $this->form->value("title");
-        $post->text = $this->form->value("text");
-        $post->save();
+        $this->comment->text = $this->form->value("text");
+        $this->comment->save();
         return true;
     }
 
+    /**
+     * Callback what to do if the form was successfully submitted, this
+     * happen when the submit callback method returns true. This method
+     * can/should be implemented by the subclass for a different behaviour.
+     */
+    public function callbackSuccess()
+    {
+        $this->di->get("response")->redirect("post/view/" . $this->comment->postId)->send();
+    }
 
-
-    // /**
-    //  * Callback what to do if the form was successfully submitted, this
-    //  * happen when the submit callback method returns true. This method
-    //  * can/should be implemented by the subclass for a different behaviour.
-    //  */
-    // public function callbackSuccess()
-    // {
-    //     $this->di->get("response")->redirect("post")->send();
-    //     //$this->di->get("response")->redirect("post/update/{$post->id}");
-    // }
-
-
-
-    // /**
-    //  * Callback what to do if the form was unsuccessfully submitted, this
-    //  * happen when the submit callback method returns false or if validation
-    //  * fails. This method can/should be implemented by the subclass for a
-    //  * different behaviour.
-    //  */
-    // public function callbackFail()
-    // {
-    //     $this->di->get("response")->redirectSelf()->send();
-    // }
 }

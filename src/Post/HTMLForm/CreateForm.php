@@ -6,6 +6,8 @@ use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
 use linder\Post\Post;
 use linder\User\User;
+use linder\Tag\Tag;
+use linder\Tag\Tag2Post;
 
 /**
  * Form to create an item.
@@ -23,23 +25,30 @@ class CreateForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Details of the item",
                 "escape-values" => false
             ],
             [
                 "title" => [
+                    "label" => "Rubrik:",
                     "type" => "text",
                     "validation" => ["not_empty"],
                 ],
                         
                 "text" => [
+                    "label" => "Inlägg:",
                     "type" => "textarea",
                     "validation" => ["not_empty"],
                 ],
 
+                "tags" => [
+                    "label" => "Taggar:",
+                    "type" => "text"
+                ],
+
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Create item",
+                    "value" => "Posta",
+                    "class" => "green",
                     "callback" => [$this, "callbackSubmit"]
                 ],
             ]
@@ -62,6 +71,24 @@ class CreateForm extends FormModel
         $post->text = $this->form->value("text");
         $post->userId = $this->di->get("session")->get("userId");
         $post->save();
+
+        $tags = explode(' ', $this->form->value("tags"));
+        foreach ($tags as $tag)
+        {
+            $tagTable = new Tag();
+            $tag2post = new Tag2Post();
+            $tagTable->setDb($this->di->get("dbqb"));
+            $tagTable->find("tag", $tag);
+            if (!$tagTable->tagId) {
+                $tagTable->tag = $tag;
+                $tagTable->save();
+                $tagTable->find("tag", $tag);
+            }
+            $tag2post->setDb($this->di->get("dbqb"));
+            $tag2post->tagId = $tagTable->tagId;
+            $tag2post->postId = $post->postId;
+            $tag2post->save();
+        }
         return true;
     }
 

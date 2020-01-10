@@ -11,18 +11,18 @@ namespace Anax\View;
 
 // Gather incoming variables and use default values if not set
 $posts = isset($posts) ? $posts : null;
+$tags = isset($tags) ? $tags : null;
 
 // Create urls for navigation
 $urlToCreate = url("post/create");
 
-?><h1>View all items</h1>
-
+?>
 <p>
     <a href="<?= $urlToCreate ?>" class="button">Skapa nytt inlägg</a>
 </p>
 
 <?php if (!$posts) : ?>
-    <p>There are no items to show.</p>
+    <p>Det finns inga inlägg</p>
 <?php
     return;
 endif;
@@ -31,13 +31,12 @@ endif;
 <?php foreach ($posts as $post) : ?>
 <div class="clearfix">
     <h4>
+        <?php if ($userId == $post->userId) : ?>
+            <a href="<?= url("post/update/{$post->postId}"); ?>" class="button right">Ändra</a>
+        <?php endif; ?>
         <a href="<?= url("post/view/{$post->postId}"); ?>">
             <?= $post->title ?>
         </a>
-        <?php if ($userId == $post->userId) : ?>
-            <a href="<?= url("post/update/{$post->postId}"); ?>" class="button">Ändra</a>
-        <?php endif; 
-        ?>
     </h4>
     <div class="right clearfix">
         <a href="<?= url("user/profile/" . $post->userId)?>">
@@ -47,6 +46,13 @@ endif;
     </div>
     <p>
         <?= $post->text ?>
+    </p>
+    <p>
+        <?php foreach ($tags as $tag) : 
+            if ($tag->postId == $post->postId) : ?>
+                &nbsp;<a href="<?= url("tag/view/{$tag->tagId}"); ?>"><?= $tag->tag ?></a>
+            <?php endif;
+        endforeach; ?>
     </p>
     <a href="<?= url("comment/create/{$post->postId}"); ?>" class="button">Svara</a>
 </div>

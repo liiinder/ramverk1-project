@@ -36,7 +36,8 @@ class CommentController implements ContainerInjectableInterface
      */
     public function createAction(int $id) : object
     {
-        if ($this->di->get("session")->has("userId") == false) {
+        $userId = $this->di->get("session")->get("userId");
+        if (!$userId) {
             $this->di->get("response")->redirect("user/login");
         }
 
@@ -48,7 +49,8 @@ class CommentController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
 
         $page->add("post/crud/view-post", [
-            "post" => $post->findAllWhereJoin("post.postId = ?", $id, "user", "user.userId = post.userId")[0]
+            "post" => $post->findAllWhere("post.postId", $id)[0],
+            "userId" => $userId
         ]);
 
         $page->add("post/crud/create", [
@@ -61,29 +63,6 @@ class CommentController implements ContainerInjectableInterface
     }
 
 
-
-    /**
-     * Handler with form to delete an item.
-     *
-     * @return object as a response object
-     */
-    public function deleteAction() : object
-    {
-        $page = $this->di->get("page");
-        $form = new DeleteForm($this->di);
-        $form->check();
-
-        $page->add("post/crud/delete", [
-            "form" => $form->getHTML(),
-        ]);
-
-        return $page->render([
-            "title" => "Delete an item",
-        ]);
-    }
-
-
-
     /**
      * Handler with form to update an item.
      *
@@ -94,16 +73,11 @@ class CommentController implements ContainerInjectableInterface
     public function updateAction(int $id) : object
     {
         $userId = $this->di->get("session")->get("userId");
-        if (!$userId) {
-            $this->di->get("response")->redirect("user/login");
-        }
-        $user = new User();
-        $user->setDb($this->di->get("dbqb"));
-        $user->find("userId", $userId);
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $post->find("postId", $id);
-        if ($post->userId != $user->userId) {
+        $comment = new Comment();
+        $comment->setDb($this->di->get("dbqb"));
+        $comment->find("commentId", $id);
+
+        if (!$userId || ($comment->userId != $userId)) {
             $this->di->get("response")->redirect("user/login");
         }
 
@@ -113,10 +87,11 @@ class CommentController implements ContainerInjectableInterface
 
         $page->add("post/crud/update", [
             "form" => $form->getHTML(),
+            "type" => "kommentar"
         ]);
 
         return $page->render([
-            "title" => "Update an item",
+            "title" => "Redigera en kommentar",
         ]);
     }
 
