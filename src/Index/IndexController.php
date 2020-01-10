@@ -1,16 +1,34 @@
 <?php
 
-namespace Anax\Controller;
+namespace linder\Index;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 
+
 /**
- * A controller for flat file markdown content.
+ * A sample controller to show how a controller class can be implemented.
+ * The controller will be injected with $di if implementing the interface
+ * ContainerInjectableInterface, like this sample class does.
+ * The controller is mounted on a particular route and can then handle all
+ * requests for that mount point.
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class FlatFileContentController implements ContainerInjectableInterface
+class IndexController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
+
+
+    /**
+     * This is the index method action, it handles:
+     *
+     * @return object
+     */
+    public function indexAction() : object
+    {
+        $this->di->get("response")->redirect("tag");
+    }
 
     /**
      * Render a page using flat file content.
@@ -59,4 +77,5 @@ class FlatFileContentController implements ContainerInjectableInterface
 
         return $page->render($content->frontmatter);
     }
+
 }

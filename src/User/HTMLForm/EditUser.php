@@ -27,26 +27,27 @@ class EditUser extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Edit profile"
             ],
             [
                 "user" => [
+                    "label"       => "Användarnamn:",
                     "type"          => "text",
                     "value"         => $user->username,
                     "readonly"      => true
                 ],
                 
                 "old-password" => [
+                    "label"       => "Lösenord:",
                     "type"        => "password"
                 ],
                 
                 "new-password" => [
+                    "label"       => "Nytt lösenord:",
                     "type"        => "password",
-                    "label" => "New password (if you want to change it.):"
                 ],
                 
                 "re-password" => [
-                    "label" => "Re-enter new password:",
+                    "label" => "Repetera det nya lösenordet:",
                     "type"        => "password"
                 ],
                 
@@ -57,13 +58,13 @@ class EditUser extends FormModel
                 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Save",
+                    "value" => "Spara ändringar",
                     "callback" => [$this, "callbackSubmit"]
                 ],
 
                 "logout" => [
                     "type" => "submit",
-                    "value" => "Logout",
+                    "value" => "Logga ut",
                     "callback" => [$this, "callbackLogout"]
                 ],
             ]

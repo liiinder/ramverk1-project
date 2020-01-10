@@ -21,53 +21,6 @@ class UserController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-
-
-    /**
-     * @var $data description
-     */
-    //private $data;
-
-
-
-    // /**
-    //  * The initialize method is optional and will always be called before the
-    //  * target method/action. This is a convienient method where you could
-    //  * setup internal properties that are commonly used by several methods.
-    //  *
-    //  * @return void
-    //  */
-    // public function initialize() : void
-    // {
-    //     ;
-    // }
-
-
-
-    /**
-     * Description.
-     *
-     * @param datatype $variable Description
-     *
-     * @throws Exception
-     *
-     * @return object as a response object
-     */
-    public function indexActionGet() : object
-    {
-        $page = $this->di->get("page");
-
-        $page->add("anax/v2/article/default", [
-            "content" => "An index page",
-        ]);
-
-        return $page->render([
-            "title" => "A index page",
-        ]);
-    }
-
-
-
     /**
      * Description.
      *
@@ -83,16 +36,18 @@ class UserController implements ContainerInjectableInterface
         $form = new UserLogin($this->di);
         $form->check();
 
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
+
         $page->add("anax/v2/article/default", [
-            "content" => $form->getHTML(),
+            "content" => "<h1>Logga in</h1>" . $form->getHTML(),
         ]);
 
         return $page->render([
             "title" => "A login page",
         ]);
     }
-
-
 
     /**
      * Description.
@@ -109,8 +64,12 @@ class UserController implements ContainerInjectableInterface
         $form = new CreateUser($this->di);
         $form->check();
 
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
+
         $page->add("anax/v2/article/default", [
-            "content" => $form->getHTML(),
+            "content" => "<h1>Registrera nytt konto</h1>" . $form->getHTML(),
         ]);
 
         return $page->render([
@@ -136,11 +95,14 @@ class UserController implements ContainerInjectableInterface
         } else {
             $form = new UserLogin($this->di);
         }
-
         $form->check();
 
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
+
         $page->add("anax/v2/article/default", [
-            "content" => $form->getHTML(),
+            "content" => "<h1>Redigera konto</h1>" . $form->getHTML(),
         ]);
 
         return $page->render([
@@ -177,6 +139,9 @@ class UserController implements ContainerInjectableInterface
             "active" => $active
         ];
 
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
 
         $page->add("user/profile", $data);
         return $page->render([

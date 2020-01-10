@@ -47,6 +47,10 @@ class PostController implements ContainerInjectableInterface
             "tags" => $tag->findAllJoin("tag", "tag.tagId = tag2post.tagId")
         ];
 
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
+
         $page->add("post/crud/view-all", $data);
 
         return $page->render([
@@ -69,6 +73,10 @@ class PostController implements ContainerInjectableInterface
         $page = $this->di->get("page");
         $form = new CreateForm($this->di);
         $form->check();
+
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
 
         $page->add("post/crud/create", [
             "form" => $form->getHTML(),
@@ -99,6 +107,10 @@ class PostController implements ContainerInjectableInterface
         $page = $this->di->get("page");
         $form = new UpdateForm($this->di, $id);
         $form->check();
+
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
 
         $page->add("post/crud/update", [
             "form" => $form->getHTML(),
@@ -141,6 +153,10 @@ class PostController implements ContainerInjectableInterface
             "userId" => $this->di->get("session")->get("userId"),
             "tags" => $tags->findTagsWhere("post.postId", $id)
         ];
+
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
 
         $page->add("post/crud/view-post", $data);
 

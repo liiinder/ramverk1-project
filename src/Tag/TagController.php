@@ -4,7 +4,8 @@ namespace linder\Tag;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use linder\tag\tag2post;
+use linder\Tag\Tag2Post;
+use linder\User\User;
 
 /**
  * A sample controller to show how a controller class can be implemented.
@@ -37,8 +38,17 @@ class TagController implements ContainerInjectableInterface
         $tag2post = new Tag2Post();
         $tag2post->setDb($this->di->get("dbqb"));
 
+        $user = new User();
+        $user->setDb($this->di->get("dbqb"));
+
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
+
         $page->add("tag/view-all", [
             "tags" => $tag2post->findTags(),
+            "posts" => $user->findMost("post"),
+            "comments" => $user->findMost("comment")
         ]);
 
         return $page->render([
@@ -56,6 +66,10 @@ class TagController implements ContainerInjectableInterface
         $data = [
             "tags" => $tag2post->findTagsWhere("tag.tagId", $id)
         ];
+
+        $page->add("anax/v2/image/default", [
+            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+        ], "flash");
 
         $page->add("tag/view-tag", $data);
 

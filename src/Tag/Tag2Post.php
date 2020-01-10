@@ -39,6 +39,7 @@ class Tag2Post extends ActiveRecordModel
                         ->join("tag", "tag2post.tagId = tag.tagId")
                         ->groupBy("tag.tagId")
                         ->orderBy("amount DESC")
+                        ->limit("10")
                         ->execute()
                         ->fetchAllClass(get_class($this));
     }

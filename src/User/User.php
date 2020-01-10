@@ -55,4 +55,18 @@ class User extends ActiveRecordModel
         $this->find("username", $username);
         return password_verify($password, $this->password);
     }
+
+    public function findMost($table)
+    {
+        $this->checkDb();
+        return $this->db->connect()
+                        ->select("*, count({$table}.{$table}Id) as amount")
+                        ->from($this->tableName)
+                        ->join("{$table}", "{$table}.userId = user.userId")
+                        ->groupBy("user.userId")
+                        ->orderBy("amount DESC")
+                        ->limit("10")
+                        ->execute()
+                        ->fetchAllClass(get_class($this));
+    }
 }

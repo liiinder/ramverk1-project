@@ -23,26 +23,27 @@ class UserLogin extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "User Login"
             ],
             [
                 "user" => [
+                    "label"       => "Användarnamn:",
                     "type"        => "text"
                 ],
                         
                 "password" => [
+                    "label"       => "Lösenord:",
                     "type"        => "password"
                 ],
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Login",
+                    "value" => "Logga in",
                     "callback" => [$this, "callbackSubmit"]
                 ],
 
                 "create" => [
                     "type" => "submit",
-                    "value" => "Register",
+                    "value" => "Registrera",
                     "callback" => [$this, "callbackRegister"]
                 ],
             ]
