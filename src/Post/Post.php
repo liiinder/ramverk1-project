@@ -43,4 +43,5 @@ class Post extends ActiveRecordModel
             "user.userId = post.userId"
         );
     }
+
 }

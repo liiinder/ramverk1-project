@@ -42,7 +42,7 @@ class PostController implements ContainerInjectableInterface
         $tag = new Tag2Post();
         $tag->setDb($this->di->get("dbqb"));
         $data = [
-            "posts" => $post->findAllJoin("user", "post.userId = user.userId"),
+            "posts" => $post->findAllJoin("user", "post.userId = user.userId", "post.postId DESC"),
             "userId" => $this->di->get("session")->get("userId"),
             "tags" => $tag->findAllJoin("tag", "tag.tagId = tag2post.tagId")
         ];
