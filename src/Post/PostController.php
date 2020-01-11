@@ -67,7 +67,7 @@ class PostController implements ContainerInjectableInterface
      */
     public function createAction() : object
     {
-        if ($this->di->get("session")->has("username") == false) {
+        if (!$this->di->get("session")->has("userId")) {
             $this->di->get("response")->redirect("user/login");
         }
         $page = $this->di->get("page");
