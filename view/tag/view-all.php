@@ -8,7 +8,7 @@ $posts = isset($posts) ? $posts : null;
 
 if ($tags) :
 ?>
-<h2>Dom <?= sizeof($tags) ?> mest använda taggarna</h2>
+<h4>De <?= sizeof($tags) ?> mest använda taggarna</h4>
 <ul>
 <?php foreach ($tags as $tag) : ?>
     <li><a href="tag/view/<?= $tag->tagId ?>">
@@ -18,20 +18,24 @@ if ($tags) :
 </ul>
 <?php endif; 
 if ($posts) : ?>
-<h2>Dom <?= sizeof($posts) ?> mest aktiva inläggsskrivare</h2>
-<?php foreach ($posts as $user) : ?>
-    <a href="user/profile/<?= $user->userId ?>">
-        <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100"><br>
-        <?= $user->username . "</a> " . $user->amount . "st" ?>
-    </a><br>
-<?php endforeach;
+    <h4>De <?= sizeof($posts) ?> mest aktiva inläggsskrivarna</h4>
+    <?php foreach ($posts as $user) : ?>
+        <div class="toplist">
+            <a href="user/profile/<?= $user->userId ?>">
+                <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100"><br>
+                <?= $user->username . "</a> " . $user->amount . "st" ?>
+            </a><br>
+        </div>
+    <?php endforeach;
 endif;
 if ($comments) : ?>
-<h2>Dom <?= sizeof($comments) ?> mest aktiva kommenterarna</h2>
-<?php foreach ($comments as $user) : ?>
-    <a href="user/profile/<?= $user->userId ?>">
-        <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100"><br>
-        <?= $user->username . "</a> " . $user->amount . "st" ?>
-    </a><br>
-<?php endforeach;
-endif;
+    <h4>De <?= sizeof($comments) ?> mest aktiva kommenterarna</h4>
+    <?php foreach ($comments as $user) : ?>
+        <div class="toplist">
+            <a href="user/profile/<?= $user->userId ?>">
+                <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100"><br>
+                <?= $user->username . "</a> " . $user->amount . "st" ?>
+            </a><br>
+        </div>
+<?php endforeach; ?>
+<?php endif;

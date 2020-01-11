@@ -23,4 +23,16 @@ class Tag extends ActiveRecordModel
     public $tagId;
     public $tag;
 
+    public function cleanTags()
+    {
+        $this->checkDb();
+        $this->db->connect()
+                //  ->deleteFrom($this->tableName)
+                //  ->where("tagId NOT IN")
+                //  ->select($this->tableIdColumn)
+                //  ->from("tag2post")
+                 ->execute("DELETE FROM tag WHERE tagId NOT IN (SELECT tagId FROM tag2post)");
+
+        return true;
+    }
 }

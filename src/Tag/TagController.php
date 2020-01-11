@@ -64,7 +64,8 @@ class TagController implements ContainerInjectableInterface
         $tag2post->setDb($this->di->get("dbqb"));
 
         $data = [
-            "tags" => $tag2post->findTagsWhere("tag.tagId", $id)
+            "tags" => $tag2post->findTagsWhere("tag.tagId", $id),
+            "test" => $tag2post->getTagString("5"),
         ];
 
         $page->add("anax/v2/image/default", [

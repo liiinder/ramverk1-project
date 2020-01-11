@@ -75,7 +75,6 @@ class UserLogin extends FormModel
             return false;
         }
 
-        $this->form->addOutput("User " . $user->username . " logged in.");
         $this->di->get("session")->set("userId", $user->userId);
         return true;
     }

@@ -9,8 +9,8 @@
 //var_dump(get_defined_functions());
 //echo showEnvironment(get_defined_vars());
 
-    $comments = isset($comments) ? $comments : null;
-    $tags = isset($tags) ? $tags : null;
+    $comments = isset($comments) ? $comments : [];
+    $tags = isset($tags) ? $tags : [];
 ?>
 <div class="clearfix">
     <h2>

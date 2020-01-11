@@ -3,6 +3,7 @@
 namespace Anax\View;
 
 $tags = isset($tags) ? $tags : null;
+var_dump($test);
 ?>
 <h1>
     Inlägg med taggen: <?= $tags[0]->tag ?>

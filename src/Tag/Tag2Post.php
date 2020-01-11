@@ -57,4 +57,16 @@ class Tag2Post extends ActiveRecordModel
                         ->execute($params)
                         ->fetchAllClass(get_class($this));
     }
+
+    public function getTagString($postId)
+    {
+        $this->checkDb();
+        return $this->db->connect()
+                 ->select()
+                 ->from($this->tableName)
+                 ->where("tag2post.postId = ?")
+                 ->join("tag", "tag2post.tagId = tag.tagId")
+                 ->execute([$postId])
+                 ->fetchAllClass(get_class($this));
+    }
 }

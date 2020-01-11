@@ -42,7 +42,8 @@ class CreateForm extends FormModel
 
                 "tags" => [
                     "label" => "Taggar:",
-                    "type" => "text"
+                    "type" => "text",
+                    "description" => "Skriv in dina taggar med mellanslag mellan varje tag"
                 ],
 
                 "submit" => [
@@ -72,6 +73,7 @@ class CreateForm extends FormModel
         $post->userId = $this->di->get("session")->get("userId");
         $post->save();
 
+        // handle tags
         $tags = explode(' ', $this->form->value("tags"));
         foreach ($tags as $tag)
         {
@@ -79,7 +81,7 @@ class CreateForm extends FormModel
             $tag2post = new Tag2Post();
             $tagTable->setDb($this->di->get("dbqb"));
             $tagTable->find("tag", $tag);
-            if (!$tagTable->tagId) {
+            if (!$tagTable->tagId && $tag != "") {
                 $tagTable->tag = $tag;
                 $tagTable->save();
                 $tagTable->find("tag", $tag);
@@ -104,16 +106,4 @@ class CreateForm extends FormModel
         $this->di->get("response")->redirect("post")->send();
     }
 
-
-
-    // /**
-    //  * Callback what to do if the form was unsuccessfully submitted, this
-    //  * happen when the submit callback method returns false or if validation
-    //  * fails. This method can/should be implemented by the subclass for a
-    //  * different behaviour.
-    //  */
-    // public function callbackFail()
-    // {
-    //     $this->di->get("response")->redirectSelf()->send();
-    // }
 }

@@ -11,7 +11,7 @@ namespace Anax\View;
 
 // Gather incoming variables and use default values if not set
 $posts = isset($posts) ? $posts : null;
-$tags = isset($tags) ? $tags : null;
+$tags = isset($tags) ? $tags : [];
 
 // Create urls for navigation
 $urlToCreate = url("post/create");
