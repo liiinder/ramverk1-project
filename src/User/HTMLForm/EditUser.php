@@ -55,6 +55,11 @@ class EditUser extends FormModel
                     "type" => "email",
                     "value" => $user->email,
                 ],
+
+                "bio" => [
+                    "type" => "textarea",
+                    "label" => "Presentation:"
+                ],
                 
                 "submit" => [
                     "type" => "submit",
@@ -85,8 +90,7 @@ class EditUser extends FormModel
         $old            = $this->form->value("old-password");
         $password       = $this->form->value("new-password");
         $repass         = $this->form->value("re-password");
-        $email          = $this->form->value("email");
-        
+
         // Check password matches
         if ( $old && ($password !== $repass )) {
             $this->form->rememberValues();
@@ -108,7 +112,8 @@ class EditUser extends FormModel
         if ($password) {
             $user->setPassword($password);
         }
-        $user->email = $email;
+        $user->email = $this->form->value("email");
+        $user->bio = $this->form->value("bio");
         $user->save();
         return true;
     }

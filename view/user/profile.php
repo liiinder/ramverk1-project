@@ -23,10 +23,16 @@ if ($active) {
     <?= $user->username ?>
     <?= $edit ?>
 </h1>
+<div class="right">
 <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=300">
 <p><?= $user->email ?></p>
-<?php if ($posts) : ?>
-    <h2><?= sizeof($posts) ?>st inlägg</h2>
+</div>
+<?php if ($user->bio) : ?>
+<p><?= $user->bio ?></p>
+<?php endif;
+if ($posts) : ?>
+<div class="left marginright">
+    <h4><?= sizeof($posts) ?>st inlägg</h4>
     <ul>
         <?php foreach ($posts as $post) : ?>
         <li>
@@ -34,9 +40,11 @@ if ($active) {
         </li>
         <?php endforeach; ?>
     </ul>
+</div>
 <?php endif;
 if ($comments) : ?>
-    <h2><?= sizeof($comments) ?>st kommentar<?= (sizeof($comments) > 1) ? "er" : "" ?></h2>
+<div class="left">
+    <h4><?= sizeof($comments) ?>st kommentar<?= (sizeof($comments) > 1) ? "er" : "" ?></h4>
     <ul>
         <?php foreach ($comments as $comments) : ?>
         <li>
@@ -44,4 +52,5 @@ if ($comments) : ?>
         </li>
         <?php endforeach; ?>
     </ul>
+</div>
 <?php endif;

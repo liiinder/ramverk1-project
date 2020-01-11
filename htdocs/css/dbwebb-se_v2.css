@@ -6979,6 +6979,13 @@ a.rm-button.rm-clicked .rm-button-face-2 {
   float: right;
   overflow: auto;
 }
+.left {
+  float: left;
+  overflow: auto;
+}
+.marginright {
+  margin-right: 2em;
+}
 .clearfix:after {
   content: " ";
   /* Older browser do not support empty content */

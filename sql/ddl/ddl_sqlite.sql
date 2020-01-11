@@ -6,11 +6,8 @@ CREATE TABLE User (
     "userId" INTEGER PRIMARY KEY NOT NULL,
     "username" TEXT UNIQUE NOT NULL,
     "password" TEXT,
-    "email" TEXT
-    -- "created" TIMESTAMP,
-    -- "updated" DATETIME,
-    -- "deleted" DATETIME,
-    -- "active" DATETIME
+    "email" TEXT,
+    "bio" TEXT
 );
 
 --
@@ -22,10 +19,6 @@ CREATE TABLE Post (
     "userId" INTEGER NOT NULL,
     "text" TEXT,
     "title" TEXT
-    -- "created" TIMESTAMP,
-    -- "updated" DATETIME,
-    -- "deleted" DATETIME,
-    -- "active" DATETIME
 );
 
 --
@@ -38,10 +31,6 @@ CREATE TABLE Comment (
     "replyId" INTEGER,
     "userId" INTEGER,
     "text" TEXT
-    -- "created" TIMESTAMP,
-    -- "updated" DATETIME,
-    -- "deleted" DATETIME,
-    -- "active" DATETIME
 );
 
 --
