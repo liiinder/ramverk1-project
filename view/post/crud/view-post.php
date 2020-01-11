@@ -64,4 +64,6 @@
         </div>
     <?php endfor; ?>
     </div>
-<?php endforeach;
+    <?php endforeach; ?>
+<br>
+<a href="<?= url("post") ?>" class="button">Visa alla inlägg</a>

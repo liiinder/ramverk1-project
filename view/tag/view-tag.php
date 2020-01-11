@@ -11,4 +11,5 @@ $tags = isset($tags) ? $tags : null;
 <a href="<?= url('post/view/' . $tag->postId ) ?>">
     <h4><?= $tag->title ?></h4>
 </a>
-<?php endforeach;
+<?php endforeach; ?>
+<a href="<?= url("tag") ?>" class="button">Visa de mest använda taggarna</a>

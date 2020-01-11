@@ -13,15 +13,8 @@ namespace Anax\View;
 $item = isset($item) ? $item : null;
 $type = isset($type) ? $type : "";
 
-// Create urls for navigation
-$urlToView = url("post");
-
-
-
 ?><h1>Redigera <?= $type ?></h1>
 
 <?= $form ?>
-
-<p>
-    <a href="<?= $urlToView ?>">Visa alla inlägg</a>
-</p>
+<br>
+<a href="<?= url("post") ?>" class="button">Visa alla inlägg</a>
