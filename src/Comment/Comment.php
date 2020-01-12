@@ -2,12 +2,12 @@
 
 namespace linder\Comment;
 
-use Anax\DatabaseActiveRecord\ActiveRecordModel;
+use linder\ActiveRecordExtension;
 
 /**
  * A database driven model using the Active Record design pattern.
  */
-class Comment extends ActiveRecordModel
+class Comment extends ActiveRecordExtension
 {
     /**
      * @var string $tableName name of the database table.

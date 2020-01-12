@@ -2,12 +2,12 @@
 
 namespace linder\User;
 
-use Anax\DatabaseActiveRecord\ActiveRecordModel;
+use linder\Model\ActiveRecordExtension;
 
 /**
  * A database driven model.
  */
-class User extends ActiveRecordModel
+class User extends ActiveRecordExtension
 {
     /**
      * @var string $tableName name of the database table.

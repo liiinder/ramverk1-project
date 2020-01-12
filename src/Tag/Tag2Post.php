@@ -2,12 +2,12 @@
 
 namespace linder\Tag;
 
-use Anax\DatabaseActiveRecord\ActiveRecordModel;
+use linder\Model\ActiveRecordExtension;
 
 /**
  * A database driven model using the Active Record design pattern.
  */
-class Tag2Post extends ActiveRecordModel
+class Tag2Post extends ActiveRecordExtension
 {
     /**
      * @var string $tableName name of the database table.
@@ -30,7 +30,7 @@ class Tag2Post extends ActiveRecordModel
      * 
      * @return array of object of this class
      */
-    public function findTags()
+    public function findAll($limit = null)
     {
         $this->checkDb();
         return $this->db->connect()
@@ -39,7 +39,7 @@ class Tag2Post extends ActiveRecordModel
                         ->join("tag", "tag2post.tagId = tag.tagId")
                         ->groupBy("tag.tagId")
                         ->orderBy("amount DESC")
-                        ->limit("10")
+                        ->limit($limit)
                         ->execute()
                         ->fetchAllClass(get_class($this));
     }

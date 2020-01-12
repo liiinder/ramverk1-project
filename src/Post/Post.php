@@ -2,12 +2,12 @@
 
 namespace linder\Post;
 
-use Anax\DatabaseActiveRecord\ActiveRecordModel;
+use linder\Model\ActiveRecordExtension;
 
 /**
  * A database driven model using the Active Record design pattern.
  */
-class Post extends ActiveRecordModel
+class Post extends ActiveRecordExtension
 {
     /**
      * @var string $tableName name of the database table.
@@ -44,4 +44,16 @@ class Post extends ActiveRecordModel
         );
     }
 
+    public function findLatest()
+    {
+        $this->checkDb();
+        return $this->db->connect()
+                        ->select()
+                        ->from($this->tableName)
+                        ->join("user", "user.userId = post.userId")
+                        ->orderBy("post.postId DESC")
+                        ->limit("3")
+                        ->execute()
+                        ->fetchAllClass(get_class($this));
+    }
 }

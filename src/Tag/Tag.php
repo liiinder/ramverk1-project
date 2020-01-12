@@ -2,12 +2,12 @@
 
 namespace linder\Tag;
 
-use Anax\DatabaseActiveRecord\ActiveRecordModel;
+use linder\Model\ActiveRecordExtension;
 
 /**
  * A database driven model using the Active Record design pattern.
  */
-class Tag extends ActiveRecordModel
+class Tag extends ActiveRecordExtension
 {
     /**
      * @var string $tableName name of the database table.
@@ -27,10 +27,6 @@ class Tag extends ActiveRecordModel
     {
         $this->checkDb();
         $this->db->connect()
-                //  ->deleteFrom($this->tableName)
-                //  ->where("tagId NOT IN")
-                //  ->select($this->tableIdColumn)
-                //  ->from("tag2post")
                  ->execute("DELETE FROM tag WHERE tagId NOT IN (SELECT tagId FROM tag2post)");
 
         return true;
