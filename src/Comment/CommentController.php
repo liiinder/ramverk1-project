@@ -22,13 +22,18 @@ class CommentController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-
-
     /**
-     * @var $data description
+     * The initialize method is optional and will always be called before the
+     * target method/action. This is a convienient method where you could
+     * setup internal properties that are commonly used by several methods.
+     *
+     * @return void
      */
-    //private $data;
-
+    public function initialize() : void
+    {
+        // Use to set the flash picture on all tag subpages
+        $this->flash = "image/theme/sunset.jpg?width=1100&height=200&cf&area=65,0,0,0";
+    }
     /**
      * Handler with form to create a new item.
      *
@@ -47,6 +52,10 @@ class CommentController implements ContainerInjectableInterface
 
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
+
+        $page->add("anax/v2/image/default", [
+            "src" => $this->flash,
+        ], "flash");
 
         $page->add("post/crud/view-post", [
             "post" => $post->findAllWhere("post.postId", $id)[0],
@@ -85,6 +94,10 @@ class CommentController implements ContainerInjectableInterface
         $form = new UpdateForm($this->di, $id);
         $form->check();
 
+        $page->add("anax/v2/image/default", [
+            "src" => $this->flash,
+        ], "flash");
+
         $page->add("post/crud/update", [
             "form" => $form->getHTML(),
             "type" => "kommentar"
@@ -120,6 +133,10 @@ class CommentController implements ContainerInjectableInterface
         $data = [
             "post" => $post
         ];
+
+        $page->add("anax/v2/image/default", [
+            "src" => $this->flash,
+        ], "flash");
 
         $page->add("post/crud/view-post", $data);
 

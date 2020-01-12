@@ -15,12 +15,18 @@ class TagController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-
-
     /**
-     * @var $data description
+     * The initialize method is optional and will always be called before the
+     * target method/action. This is a convienient method where you could
+     * setup internal properties that are commonly used by several methods.
+     *
+     * @return void
      */
-    //private $data;
+    public function initialize() : void
+    {
+        // Use to set the flash picture on all tag subpages
+        $this->flash = "image/theme/sunset.jpg?width=1100&height=200&cf&area=65,0,0,0";
+    }
 
 
     /**
@@ -46,7 +52,7 @@ class TagController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("tag/index", [
@@ -74,7 +80,7 @@ class TagController implements ContainerInjectableInterface
         ];
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("tag/view-tag", $data);
@@ -95,7 +101,7 @@ class TagController implements ContainerInjectableInterface
         ];
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("tag/view-all", $data);

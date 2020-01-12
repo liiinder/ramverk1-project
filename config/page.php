@@ -12,7 +12,7 @@ return [
         "region" => "layout",
         "template" => "anax/v2/layout/dbwebb_se",
         "data" => [
-            "baseTitle" => " | ramverk1",
+            "baseTitle" => " | Discgolf",
             "bodyClass" => null,
             "favicon" => "favicon.ico",
             "htmlClass" => null,
@@ -28,23 +28,23 @@ return [
 
     // These views are always loaded into the collection of views.
     "views" => [
-        // [
-        //     "region" => "header-col-1",
-        //     "template" => "anax/v2/header/site_logo",
-        //     "data" => [
-        //         "class" => "large",
-        //         "siteLogo"      => "image/theme/leaf_256x256.png",
-        //         "siteLogoAlt"   => "Löv",
-        //     ],
-        // ],
+        [
+            "region" => "header-col-1",
+            "template" => "anax/v2/header/site_logo",
+            "data" => [
+                "class" => "large",
+                "siteLogo"      => "image/theme/discgolf3.png?h=256&w=256",
+                "siteLogoAlt"   => "Korg",
+            ],
+        ],
         [
             "region" => "header-col-1",
             "template" => "anax/v2/header/site_logo_text",
             "data" => [
                 "homeLink"      => "",
-                "siteLogoText"  => "ramverk1",
-                // "siteLogoTextIcon" => "image/theme/leaf_40x40.png",
-                // "siteLogoTextIconAlt" => "Löv-bild",
+                "siteLogoText"  => "Discgolf",
+                "siteLogo"      => "image/theme/discgolf3.png?h=40&w=40",
+                "siteLogoTextIconAlt" => "Korg",
             ],
         ],
         [

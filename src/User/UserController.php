@@ -22,6 +22,19 @@ class UserController implements ContainerInjectableInterface
     use ContainerInjectableTrait;
 
     /**
+     * The initialize method is optional and will always be called before the
+     * target method/action. This is a convienient method where you could
+     * setup internal properties that are commonly used by several methods.
+     *
+     * @return void
+     */
+    public function initialize() : void
+    {
+        // Use to set flash picture on all user subpages
+        $this->flash = "image/theme/sunset.jpg?width=1100&height=200&cf&area=65,0,0,0";
+    }
+
+    /**
      * Description.
      *
      * @param datatype $variable Description
@@ -37,7 +50,7 @@ class UserController implements ContainerInjectableInterface
         $form->check();
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("anax/v2/article/default", [
@@ -65,7 +78,7 @@ class UserController implements ContainerInjectableInterface
         $form->check();
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("anax/v2/article/default", [
@@ -98,7 +111,7 @@ class UserController implements ContainerInjectableInterface
         $form->check();
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("anax/v2/article/default", [
@@ -140,7 +153,7 @@ class UserController implements ContainerInjectableInterface
         ];
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("user/profile", $data);

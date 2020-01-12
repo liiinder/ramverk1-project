@@ -45,7 +45,7 @@ endif;
         </a>
     </div>
     <p>
-        <?= $post->text ?>
+        <?= $filter->defaultTransform($post->text) ?>
     </p>
     <p>
         <?php foreach ($tags as $tag) : 

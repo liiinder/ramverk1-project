@@ -11,6 +11,8 @@ use linder\Post\HTMLForm\UpdateForm;
 use linder\User\User;
 use linder\Comment\Comment;
 use linder\Tag\Tag2Post;
+use \Michelf\MarkdownExtra;
+
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -23,11 +25,18 @@ class PostController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-
-
     /**
-     * @var $data description
+     * The initialize method is optional and will always be called before the
+     * target method/action. This is a convienient method where you could
+     * setup internal properties that are commonly used by several methods.
+     *
+     * @return void
      */
+    public function initialize() : void
+    {
+        // Use to set the flash picture on all tag subpages
+        $this->flash = "image/theme/sunset.jpg?width=1100&height=200&cf&area=65,0,0,0";
+    }
 
     /**
      * Show all items.
@@ -44,11 +53,12 @@ class PostController implements ContainerInjectableInterface
         $data = [
             "posts" => $post->findAllJoin("user", "post.userId = user.userId", "post.postId DESC"),
             "userId" => $this->di->get("session")->get("userId"),
-            "tags" => $tag->findAllJoin("tag", "tag.tagId = tag2post.tagId")
+            "tags" => $tag->findAllJoin("tag", "tag.tagId = tag2post.tagId"),
+            "filter" => new MarkdownExtra()
         ];
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("post/crud/view-all", $data);
@@ -75,7 +85,7 @@ class PostController implements ContainerInjectableInterface
         $form->check();
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("post/crud/create", [
@@ -109,7 +119,7 @@ class PostController implements ContainerInjectableInterface
         $form->check();
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("post/crud/update", [
@@ -151,11 +161,12 @@ class PostController implements ContainerInjectableInterface
             "post" => $post->findAllWhere("post.postId", $id)[0],
             "comments" => $res,
             "userId" => $this->di->get("session")->get("userId"),
-            "tags" => $tags->findTagsWhere("post.postId", $id)
+            "tags" => $tags->findTagsWhere("post.postId", $id),
+            "filter" => new MarkdownExtra()
         ];
 
         $page->add("anax/v2/image/default", [
-            "src" => "image/theme/tree.jpg?width=1100&height=150&crop-to-fit&area=0,0,30,0",
+            "src" => $this->flash,
         ], "flash");
 
         $page->add("post/crud/view-post", $data);

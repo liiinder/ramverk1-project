@@ -20,6 +20,7 @@ class EditUser extends FormModel
     {
         parent::__construct($di);
 
+        $this->id = $id;
         $user = new User();
         $user->setDb($this->di->get("dbqb"));
         $user->find("userId", $id);
@@ -116,6 +117,16 @@ class EditUser extends FormModel
         $user->bio = $this->form->value("bio");
         $user->save();
         return true;
+    }
+
+    /**
+     * Callback what to do if the form was successfully submitted, this
+     * happen when the submit callback method returns true. This method
+     * can/should be implemented by the subclass for a different behaviour.
+     */
+    public function callbackSuccess()
+    {
+        $this->di->get("response")->redirect("user/profile/" . $this->id)->send();
     }
 
     /**
