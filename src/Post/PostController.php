@@ -64,7 +64,7 @@ class PostController implements ContainerInjectableInterface
         $page->add("post/crud/view-all", $data);
 
         return $page->render([
-            "title" => "Visa inlägg",
+            "title" => "Forum",
         ]);
     }
 
@@ -172,7 +172,7 @@ class PostController implements ContainerInjectableInterface
         $page->add("post/crud/view-post", $data);
 
         return $page->render([
-            "title" => "Visa inlägg",
+            "title" => "Visar inlägg",
         ]);
     }
 }
