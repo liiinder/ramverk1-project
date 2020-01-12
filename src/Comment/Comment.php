@@ -2,7 +2,7 @@
 
 namespace linder\Comment;
 
-use linder\ActiveRecordExtension;
+use linder\Model\ActiveRecordExtension;
 
 /**
  * A database driven model using the Active Record design pattern.
