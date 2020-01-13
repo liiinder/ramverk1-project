@@ -38,10 +38,6 @@ class UserController implements ContainerInjectableInterface
     /**
      * Description.
      *
-     * @param datatype $variable Description
-     *
-     * @throws Exception
-     *
      * @return object as a response object
      */
     public function loginAction() : object
@@ -67,8 +63,6 @@ class UserController implements ContainerInjectableInterface
      * Description.
      *
      * @param datatype $variable Description
-     *
-     * @throws Exception
      *
      * @return object as a response object
      */

@@ -14,7 +14,7 @@ use linder\Comment\Comment;
 class CreateForm extends FormModel
 {
     public $postId;
-    public $commentId;
+    public $replyId;
 
     /**
      * Constructor injects with DI container.

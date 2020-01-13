@@ -3,7 +3,6 @@
 
     $comments = isset($comments) ? $comments : [];
     $tags = isset($tags) ? $tags : [];
-    var_dump($userId);
 ?>
 <div class="clearfix">
     <h2>

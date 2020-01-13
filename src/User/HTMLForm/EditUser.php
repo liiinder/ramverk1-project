@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
  */
 class EditUser extends FormModel
 {
+    public $id;
     /**
      * Constructor injects with DI container.
      *
