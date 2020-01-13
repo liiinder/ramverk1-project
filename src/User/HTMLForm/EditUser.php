@@ -4,7 +4,7 @@ namespace linder\User\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
 use linder\User\User;
-use Psr\Container\ContainerInterface;
+use Anax\Commons\ContainerInjectableInterface;
 
 /**
  * Example of FormModel implementation.
@@ -14,7 +14,7 @@ class EditUser extends FormModel
     /**
      * Constructor injects with DI container.
      *
-     * @param Psr\Container\ContainerInterface $di a service container
+     * @param Anax\Commons\ContainerInjectableInterface $di a service container
      */
     public function __construct(ContainerInterface $di, $id)
     {
