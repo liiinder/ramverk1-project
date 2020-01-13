@@ -1,3 +1,6 @@
-#### Footer col 2
+#### Svenska återförsäljare
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+- [DiscSport.se](http://www.discsport.se)
+- [Fyndisc.se](https://fyndisc.se/)
+- [Micke's Discgolf](http://www.mickesdiscgolf.se/)
+- [Anhyzer.se](http://anhyzer.se/)
