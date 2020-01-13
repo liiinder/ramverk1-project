@@ -3,7 +3,7 @@
 namespace linder\Post\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
-use Anax\Commons\ContainerInjectableInterface;
+use Psr\Container\ContainerInterface;
 use linder\Post\Post;
 use linder\Comment\Comment;
 use linder\Tag\Tag;
@@ -17,7 +17,7 @@ class UpdateForm extends FormModel
     /**
      * Constructor injects with DI container and the id to update.
      *
-     * @param Anax\Commons\ContainerInjectableInterface $di a service container
+     * @param \Psr\Container\ContainerInterface $di a service container
      * @param integer             $id to update
      */
     public function __construct(ContainerInterface $di, $id)

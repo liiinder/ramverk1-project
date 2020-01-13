@@ -3,7 +3,7 @@
 namespace linder\Post\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
-use Anax\Commons\ContainerInjectableInterface;
+use Psr\Container\ContainerInterface;
 use linder\Post\Post;
 use linder\User\User;
 use linder\Tag\Tag;
@@ -17,7 +17,7 @@ class CreateForm extends FormModel
     /**
      * Constructor injects with DI container.
      *
-     * @param Anax\Commons\ContainerInjectableInterface $di a service container
+     * @param \Psr\Container\ContainerInterface $di a service container
      */
     public function __construct(ContainerInterface $di)
     {
