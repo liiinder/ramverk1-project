@@ -70,7 +70,7 @@ class CommentController implements ContainerInjectableInterface
         ]);
 
         return $page->render([
-            "title" => "Create a item",
+            "title" => "Kommentera",
         ]);
     }
 
@@ -111,40 +111,4 @@ class CommentController implements ContainerInjectableInterface
         ]);
     }
 
-    /**
-     * Handler to show an post.
-     *
-     * @param int $id the id to view.
-     *
-     * @return object as a response object
-     */
-    public function viewAction(int $id) : object
-    {
-        $post = new Post();
-        $post->setDb($this->di->get("dbqb"));
-        $post->findAllWhereJoin(
-            "post.postId = ?",
-            $id,
-            "user",
-            "post.userId = user.userId"
-        );
-
-        $page = $this->di->get("page");
-        $form = new UpdateForm($this->di, $id);
-        $form->check();
-
-        $data = [
-            "post" => $post
-        ];
-
-        $page->add("anax/v2/image/default", [
-            "src" => $this->flash,
-        ], "flash");
-
-        $page->add("post/crud/view-post", $data);
-
-        return $page->render([
-            "title" => "View post",
-        ]);
-    }
 }

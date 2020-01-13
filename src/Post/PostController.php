@@ -5,8 +5,6 @@ namespace linder\Post;
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 use linder\Post\HTMLForm\CreateForm;
-use linder\Post\HTMLForm\EditForm;
-use linder\Post\HTMLForm\DeleteForm;
 use linder\Post\HTMLForm\UpdateForm;
 use linder\User\User;
 use linder\Comment\Comment;

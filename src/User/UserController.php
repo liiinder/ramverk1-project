@@ -62,8 +62,6 @@ class UserController implements ContainerInjectableInterface
     /**
      * Description.
      *
-     * @param datatype $variable Description
-     *
      * @return object as a response object
      */
     public function createAction() : object
@@ -86,9 +84,9 @@ class UserController implements ContainerInjectableInterface
     }
 
     /**
-     * Description.
+     * edit route.
      *
-     * @param datatype $variable Description
+     * @param int $id for user you want to change
      *
      * @return object as a response object
      */
