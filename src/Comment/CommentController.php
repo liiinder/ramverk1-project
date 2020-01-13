@@ -5,8 +5,6 @@ namespace linder\Comment;
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 use linder\Comment\HTMLForm\CreateForm;
-use linder\Comment\HTMLForm\EditForm;
-use linder\Comment\HTMLForm\DeleteForm;
 use linder\Comment\HTMLForm\UpdateForm;
 use linder\User\User;
 use linder\Post\Post;
@@ -21,6 +19,8 @@ use linder\Post\Post;
 class CommentController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
+
+    public $flash;
 
     /**
      * The initialize method is optional and will always be called before the

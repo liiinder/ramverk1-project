@@ -15,6 +15,7 @@ class TagController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
+    public $flash;
     /**
      * The initialize method is optional and will always be called before the
      * target method/action. This is a convienient method where you could
