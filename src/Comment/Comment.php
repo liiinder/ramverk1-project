@@ -42,7 +42,8 @@ class Comment extends ActiveRecordExtension
                 $comment->depth = 1;
                 array_push($res, $comment);
             } else {
-                for ($i = 0; $i < sizeof($res); $i++){
+                $size = sizeof($res);
+                for ($i = 0; $i < $size; $i++){
                     if ($res[$i]->commentId == $comment->replyId) {
                         $comment->depth = $res[$i]->depth + 1;
                         array_splice($res, $i+1, 0, [$comment]);
@@ -57,8 +58,8 @@ class Comment extends ActiveRecordExtension
      * Overwrites the ActiveRecord findAllWhere
      * so it includes the join on each search.
      * 
-     * @param string table
-     * @param string value to search for
+     * @param string $where what column
+     * @param string $value to search for
      *
      * @return array of object of this class
      */
