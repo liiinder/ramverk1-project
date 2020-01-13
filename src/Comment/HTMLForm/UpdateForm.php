@@ -11,6 +11,10 @@ use linder\Comment\Comment;
  */
 class UpdateForm extends FormModel
 {
+
+    public $id;
+    public $comment;
+    
     /**
      * Constructor injects with DI container and the id to update.
      *

@@ -8,6 +8,7 @@ use linder\Comment\HTMLForm\CreateForm;
 use linder\Comment\HTMLForm\UpdateForm;
 use linder\User\User;
 use linder\Post\Post;
+use \Michelf\MarkdownExtra;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -34,6 +35,7 @@ class CommentController implements ContainerInjectableInterface
         // Use to set the flash picture on all tag subpages
         $this->flash = "image/theme/sunset.jpg?width=1100&height=200&cf&area=65,0,0,0";
     }
+
     /**
      * Handler with form to create a new item.
      *
@@ -59,7 +61,8 @@ class CommentController implements ContainerInjectableInterface
 
         $page->add("post/crud/view-post", [
             "post" => $post->findAllWhere("post.postId", $id)[0],
-            "userId" => $userId
+            "userId" => $userId,
+            "filter" => new MarkdownExtra()
         ]);
 
         $page->add("post/crud/create", [
