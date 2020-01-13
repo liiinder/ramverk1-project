@@ -29,8 +29,8 @@ class Post extends ActiveRecordExtension
      * Overwrites the ActiveRecord findAllWhere
      * so it includes the join on each search.
      * 
-     * @param string table
-     * @param string value to search for
+     * @param string $where
+     * @param string $value to search for
      *
      * @return array of object of this class
      */

@@ -14,6 +14,8 @@ use linder\Tag\Tag2Post;
  */
 class UpdateForm extends FormModel
 {
+    public $id;
+
     /**
      * Constructor injects with DI container and the id to update.
      *
