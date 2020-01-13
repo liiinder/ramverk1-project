@@ -25,9 +25,8 @@ class Tag2Post extends ActiveRecordExtension
     /**
      * Join + find and return all.
      *
-     * @param string $table what table to join.
-     * @param string $condition what to join on.
-     * 
+     * @param string $limit how many results we want.
+     *
      * @return array of object of this class
      */
     public function findAll($limit = null)

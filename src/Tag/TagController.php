@@ -33,10 +33,6 @@ class TagController implements ContainerInjectableInterface
     /**
      * Show all tags
      *
-     * @param datatype $variable Description
-     *
-     * @throws Exception
-     *
      * @return object as a response object
      */
     public function indexActionGet() : object

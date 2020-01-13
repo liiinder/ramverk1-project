@@ -96,8 +96,6 @@ class UserController implements ContainerInjectableInterface
      *
      * @param datatype $variable Description
      *
-     * @throws Exception
-     *
      * @return object as a response object
      */
     public function editAction(int $id) : object
