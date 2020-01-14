@@ -40,7 +40,7 @@ if ($posts) : ?>
     foreach ($posts as $user) : ?>
         <div class="toplist">
             <a href="user/profile/<?= $user->userId ?>">
-                <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100"><br>
+                <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100&d=mm"><br>
                 <?= $user->username . "</a> " . $user->amount . "st" ?>
             </a><br>
         </div>
@@ -51,7 +51,7 @@ if ($comments) : ?>
     <?php foreach ($comments as $user) : ?>
         <div class="toplist">
             <a href="user/profile/<?= $user->userId ?>">
-                <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100"><br>
+                <img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=100&d=mm"><br>
                 <?= $user->username . "</a> " . $user->amount . "st" ?>
             </a><br>
         </div>

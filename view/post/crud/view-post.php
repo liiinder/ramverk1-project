@@ -13,7 +13,7 @@
     </h2>
     <div class="right clearfix">
         <a href="<?= url("user/profile/" . $post->userId)?>">
-            <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100"><br>
+            <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100&d=mm"><br>
             <?= $post->username?>
         </a>
     </div>
@@ -36,7 +36,7 @@
     <?php endfor; ?>
         <div class="right clearfix">
             <a href="<?= url("user/profile/" . $comment->userId)?>">
-                <img src="https://www.gravatar.com/avatar/<?= md5($comment->email) ?>?s=50"><br>
+                <img src="https://www.gravatar.com/avatar/<?= md5($comment->email) ?>?s=50&d=mm"><br>
                 <?= $comment->username ?>
             </a>
         </div>

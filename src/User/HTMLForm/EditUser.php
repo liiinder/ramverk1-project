@@ -29,6 +29,7 @@ class EditUser extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
+                "escape-values" => false
             ],
             [
                 "user" => [
@@ -60,7 +61,8 @@ class EditUser extends FormModel
 
                 "bio" => [
                     "type" => "textarea",
-                    "label" => "Presentation:"
+                    "label" => "Presentation:",
+                    "value" => $user->bio
                 ],
                 
                 "submit" => [

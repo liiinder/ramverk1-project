@@ -24,7 +24,7 @@ if ($active) {
     <?= $edit ?>
 </h1>
 <div class="right">
-<img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=300">
+<img src="https://www.gravatar.com/avatar/<?= md5($user->email) ?>?s=300&d=mm">
 <p><?= $user->email ?></p>
 </div>
 <?php if ($user->bio) : ?>

@@ -40,7 +40,7 @@ endif;
     </h4>
     <div class="right clearfix">
         <a href="<?= url("user/profile/" . $post->userId)?>">
-            <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100"><br>
+            <img src="https://www.gravatar.com/avatar/<?= md5($post->email) ?>?s=100&d=mm"><br>
             <?= $post->username?>
         </a>
     </div>
